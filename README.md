@@ -1,4 +1,4 @@
-# :package:GitHunt
+# Boxman :package:
 
 ## Description
 
@@ -7,8 +7,8 @@ An on demand service that picks-up anything you requested through the app and de
 ## Technology and Tools Used
 
 * Backend: nodejs with express and a mongo database.
-* Frontend: React with SemanticUI.
-* Text Editor: VSCode.
+* Frontend: React with Semantic UI.
+* Text Editor: VS Code.
 * Api Testing: Postman.
 
 ## Thoughts?

@@ -1,0 +1,29 @@
+.Homepage {
+    background-color:#FDB636;
+    font-family: 'Open Sans', sans-serif;
+    height: 100vh;
+}
+
+.Homepage-header {
+    text-align: center;
+    font-size: 45px;
+    font-weight: 700;
+    font-family: 'Open Sans', sans-serif;
+    color: #13916E;
+}
+
+.Homepage-text {
+    text-align: center;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 60px;
+}
+
+.Homepage-quote {
+    font-size: 30px;
+    color: #242424;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    background-color: #FDB636;
+}

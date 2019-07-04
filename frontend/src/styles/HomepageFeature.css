@@ -1,0 +1,19 @@
+.HomepageFeature {
+    text-align: center;
+    background-color: white;
+    height: 125px;
+    width: 125px;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.HomepageFeature:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.05);
+}
+
+.HomepageFeature-img {
+    height: 60px;
+    width: 60px;
+    margin: 0 auto;
+}

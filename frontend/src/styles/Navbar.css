@@ -1,0 +1,48 @@
+.Navbar {
+    background-color:#FDB636;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.Navbar-register {
+    width: 10rem;
+    background-color: #27B08A;
+    color: white;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    border-radius: 30px;
+}
+
+.Navbar-register:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}
+
+.Navbar-login {
+    width: 10rem;
+    background-color: white;
+    color: #27B08A;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    border-radius: 30px;
+}
+
+.Navbar-login:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: #27B08A;
+}
+
+.Navbar-modal {
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto!important;
+    top: auto !important;
+    left: auto !important;
+    transform-origin: center !important;
+    transition: all ease .5s;
+    padding-bottom: 1.5rem;
+}

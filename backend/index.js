@@ -6,6 +6,7 @@ const port = process.env.PORT || 3001
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const authRoutes = require('./routes/auth')
+const usersRoutes = require('./routes/users')
 const errorHandler = require('./handlers/error')
 
 app.use(cors())
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 app.use('/api/auth', authRoutes)
+app.use('/api/users', usersRoutes)
 
 app.get('/', function(req, res) {
     res.send('Hello')

@@ -17,13 +17,13 @@ const Homepage = () => {
         {name: 'Self Care', picture: SelfcareImg},
         {name: 'Food', picture: FoodImg}
     ]
-    const featuresList = features.map(f => (
-        <HomepageFeature name={f.name} picture={f.picture}/>
+    const featuresList = features.map((f,index) => (
+        <HomepageFeature key={index} name={f.name} picture={f.picture}/>
     ))
     return (
         <div className='Homepage'>
             <div className='container pt-5'>
-                <h1 className='Homepage-header'>BoxMan <i class="fa fa-map-marker" /></h1>
+                <h1 className='Homepage-header'>BoxMan <i className="fa fa-map-marker" /></h1>
                 <p className='Homepage-text'>Anything you want<br/>delivered in minutes</p>
                 <div className='row'>
                     {featuresList}

@@ -3,6 +3,11 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+.Navbar-logged {
+    background-color: transparent;
+    font-family: 'Open Sans', sans-serif;
+}
+
 .Navbar-register {
     width: 10rem;
     background-color: #27B08A;
@@ -45,4 +50,15 @@
     transform-origin: center !important;
     transition: all ease .5s;
     padding-bottom: 1.5rem;
+}
+
+.Navbar-user {
+    color: #27B08A;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    text-align: center;
+}
+
+.Navbar-user:hover {
+    text-decoration: underline;
 }

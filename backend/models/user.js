@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema({
+    fbId: {
+        type: String
+    },
     email: {
         type: String,
         required: true,
@@ -12,8 +15,7 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     password: {
-        type: String,
-        required: true
+        type: String
     },
     address: {
         type: String
@@ -32,12 +34,14 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", async function(next) {
     try {
-        if (!this.isModified("password")) {
-            return next();
+        if(this.password !== ""){
+          if (!this.isModified("password")) {
+              return next();
+          }
+          let hashedPassword = await bcrypt.hash(this.password, 10);
+          this.password = hashedPassword;
+          return next();
         }
-        let hashedPassword = await bcrypt.hash(this.password, 10);
-        this.password = hashedPassword;
-        return next();
     } catch (err) {
         return next(err);
     }

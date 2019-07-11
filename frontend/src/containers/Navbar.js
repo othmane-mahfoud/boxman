@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../styles/Navbar.css'
-import { Container, Menu, Modal } from 'semantic-ui-react'
+import { Checkbox, Container, Menu, Modal } from 'semantic-ui-react'
 import Authform from '../components/Authform'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'

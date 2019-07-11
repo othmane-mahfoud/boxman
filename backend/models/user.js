@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const Order = require('./order')
 
 const userSchema = new mongoose.Schema({
     fbId: {
@@ -23,13 +24,25 @@ const userSchema = new mongoose.Schema({
     phoneNumber: {
         type: String
     },
+    // profileImageName: {
+    //     type: String,
+    //     default: "none"
+    // },
+    // profileImageData: {
+    //     type: Buffer
+    // },
     profileImageUrl: {
         type: String
     },
-    activeBoxman: {
-        type: Boolean,
-        default: false
-    }
+    status: {
+        type: String
+    },
+    orders: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Order"
+        }
+    ]
 });
 
 userSchema.pre("save", async function(next) {

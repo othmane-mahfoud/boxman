@@ -18,6 +18,7 @@ export default class Authform extends Component {
     }
 
     componentWillMount() {
+        this.props.removeError()
         window.fbAsyncInit = (() => {
             window.FB.init({
                 appId: '1220894838080543',
@@ -118,10 +119,7 @@ export default class Authform extends Component {
 
     render() {
         const { email, name, password} = this.state
-        const { errors, removeError, heading, buttonText, register, history } = this.props
-        history.listen(() => {
-            removeError()
-        })
+        const { errors, heading, buttonText, register } = this.props
         return (
             <Container className='Authform'>
                 <h1 className='Authform-header mt-2' size='huge'>{heading}</h1>

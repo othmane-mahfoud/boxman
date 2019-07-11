@@ -3,6 +3,30 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+.Navbar-brand {
+    color: #27B08A;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 25px;
+    margin-left: 0px;
+}
+
+.Navbar-Dropdown {
+    color: #27B08A;
+}
+
+.Navbar-Dropdown-Name {
+    color: #27B08A;
+}
+
+.Navbar-Dropdown-Link {
+    color: black;
+}
+
+.Navbar-Dropdown-Link:hover, .Navbar-Dropdown-Link:active {
+    color: black;
+    text-decoration: none;
+}
+
 .Navbar-logged {
     background-color: transparent;
     font-family: 'Open Sans', sans-serif;

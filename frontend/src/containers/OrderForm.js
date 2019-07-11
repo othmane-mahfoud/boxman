@@ -12,7 +12,7 @@ class OrderForm extends Component {
             from: "",
             to: "",
             description: "",
-            deliveryType: "regular",
+            deliveryType: "Regular",
             price: 0
         }
     }
@@ -55,8 +55,8 @@ class OrderForm extends Component {
             { key: 2, text: 'Other', value: 'other' },
         ]
         const deliveryOptions = [
-            { key: 0, text: 'Regular', value: 'regular' },
-            { key: 1, text: 'Express', value: 'express' },
+            { key: 0, text: 'Regular', value: 'Regular' },
+            { key: 1, text: 'Express', value: 'Express' },
         ]
         return (
             <Container>

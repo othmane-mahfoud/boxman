@@ -45,3 +45,7 @@
 .Profile-upload:hover {
     color: white;
 }
+
+.Profile-dropdown {
+    height: 50px;
+}

@@ -5,3 +5,4 @@ mongoose.Promise = Promise
 mongoose.connect('mongodb://localhost/boxman', {useNewUrlParser: true})
 
 module.exports.User = require('./user')
+module.exports.Order = require('./order')

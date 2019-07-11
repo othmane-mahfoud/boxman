@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Form, Icon, Image } from 'semantic-ui-react'
+import axios from 'axios'
+import { Form, Icon, Image, Menu, Select } from 'semantic-ui-react'
 import PlaceholderImg from '../images/profile-placeholder.jpg'
+import FileBase from 'react-file-base64';
 import '../styles/Profile.css'
 
 export default class Profile extends Component {
@@ -9,15 +11,23 @@ export default class Profile extends Component {
         this.state = {
             profileImageUrl: "",
             phoneNumber: "",
-            address: ""
+            address: "",
+            status: "customer"
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSelect = this.handleSelect.bind(this)
     }
 
     handleChange(e) {
         this.setState({
             [e.target.name] : e.target.value
+        })
+    }
+
+    handleSelect(e, data) {
+        this.setState({
+            status : data.value
         })
     }
 
@@ -38,9 +48,58 @@ export default class Profile extends Component {
         });
     }
 
+    uploadImage(e) {
+        let imageFormObj = new FormData();
+    
+        imageFormObj.append("profileImageName", "multer-image-" + Date.now());
+        imageFormObj.append("profileImageData", e.target.files[0]);
+        debugger;
+        // stores a readable instance of 
+        // the image being uploaded using multer
+        this.setState({
+            profileImageUrl: URL.createObjectURL(e.target.files[0])
+        });
+        debugger;
+        const imageData = {
+            profileImageName: imageFormObj.get("profileImageName"),
+            profileImageData: imageFormObj.get("profileImageData").name
+        }
+        debugger;
+        axios.put(`/api/users/${this.props.currentUser.user.id}/uploadmulter`, imageData)
+            .then((data) => {
+                if (data.data.success) {
+                    alert("Image has been successfully uploaded using multer");
+                }
+            })
+            .catch((err) => {
+                alert(err);
+            });
+    }
+
+    getBaseFile(files) {
+        // create a local readable base64 instance of an image
+        this.setState({
+          profileImageUrl: files.base64.toString()
+        });
+        debugger;
+        axios.put(`/api/users/${this.props.currentUser.user.id}/uploadBase64`, { profileImageUrl: this.state.profileImageUrl })
+          .then((data) => {
+            if (data.data.success) {
+              alert("Image has been successfully uploaded using base64 format");
+            }
+          })
+          .catch((err) => {
+            alert(err)
+          });
+      }
+
     render() {
         const { currentUser } = this.props
-        const { profileImageUrl, phoneNumber, address } = this.state
+        const { profileImageUrl, phoneNumber, address, status } = this.state
+        const statusOptions = [
+            { key: 0, text: 'Customer', value: 'customer' },
+            { key: 1, text: 'Boxman', value: 'boxman' }
+        ]
         return (
             <div className='container'>
                 <div className='Profile'>
@@ -53,6 +112,15 @@ export default class Profile extends Component {
                             <Image src={profileImageUrl || PlaceholderImg} size='small' circular centered/>
                             <div className='Profile-center'><button className='Profile-upload btn btn-outline-warning mt-3 mb-4'><Icon name='upload'/>Upload</button></div>
                         </div>
+                        
+                        {/* <input type="file" className="process__upload-btn" onChange={(e) => this.uploadImage(e)} />
+                        <img src={profileImageUrl} alt="upload" className="process__image" /> */}
+
+                        {/* <div className="process__upload-btn">
+                            <FileBase type="file" multiple={false} onDone={this.getBaseFile.bind(this)} />
+                        </div>
+                        <img src={profileImageUrl} alt="upload" className="process__image" /> */}
+
                         <Form onSubmit={this.handleSubmit}>
                             <Form.Field>
                                 <label>Email</label>
@@ -69,6 +137,22 @@ export default class Profile extends Component {
                             <Form.Field>
                                 <label htmlFor='address'>Address</label>
                                 <input onChange={this.handleChange} name='address' id='address' value={address} placeholder='Enter your address' />
+                            </Form.Field>
+                            <Form.Field>
+                                {/* <label htmlFor='status'>Status</label>
+                                <select className='form-control' id="lang" onChange={this.handleChange} name='status' value={status}>
+                                    <option value="Customer">Customer</option>
+                                    <option value="Boxman">Boxman</option>
+                                </select> */}
+                                <Form.Field
+                                    control={Select}
+                                    options={statusOptions}
+                                    label= 'Status'
+                                    placeholder='Status'
+                                    name='status'
+                                    value={status}
+                                    onChange={this.handleSelect}
+                                />
                             </Form.Field>
                             <div className='Profile-center'><button type='submit' className='btn Profile-submit p-3 mt-2'>EDIT PROFILE</button></div>
                         </Form>

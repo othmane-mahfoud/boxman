@@ -16,7 +16,7 @@ const Main = props => {
         <Switch>
             <Route exact path='/' render={(props) => <Homepage currentUser={currentUser} {...props}/>}/>
             <Route exact path='/profile' render={(props) => <Profile editUser={editUser} currentUser={currentUser} {...props}/>}/>
-            <Route exact path='/orders' render={(props) => <OrdersTimeline currentUser={currentUser} {...props}/>}/>
+            {/* <Route exact path='/orders' render={(props) => <OrdersTimeline currentUser={currentUser} {...props}/>}/> */}
             <Route exact path='/users/:id/orders/new' component={withAuth(OrderForm)} />
         </Switch>
     ) 

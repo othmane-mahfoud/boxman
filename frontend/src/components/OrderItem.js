@@ -1,5 +1,6 @@
 import React from 'react'
 import Moment from 'react-moment'
+import '../styles/OrderItem.css'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import DefaultImage from '../images/profile-placeholder.jpg'
 import FoodImage from '../images/pasta.jpg'
@@ -18,8 +19,9 @@ const OrderItem = (
         isCorrectCustomer, 
         // isCorrectBoxman, 
         cancelOrder,
-        // removeOrder,
-        orderStatus
+        removeOrder,
+        orderStatus,
+        editOrder
     }
 ) => {
     var orderImage = DefaultImage
@@ -28,7 +30,7 @@ const OrderItem = (
     } else {
         orderImage = GroceriesImage
     }
-    var deliveryIcon = deliveryType === 'regular' ? <Icon name='wait'/> : <Icon name='shipping fast'/>
+    var deliveryIcon = deliveryType === 'Regular' ? <Icon name='wait'/> : <Icon name='shipping fast'/>
     return(
         <div className='OrderItem col-sm-6 col-md-4 col-lg-3'>
             <Card>
@@ -46,9 +48,9 @@ const OrderItem = (
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                    {orderStatus==='myOrders' && <button className='btn btn-outline-danger'>Cancel</button>}
-                    {orderStatus==='pending' && <button className='btn btn-outline-success'>Deliver</button>}
-                    {orderStatus==='toDeliver' && <button className='btn btn-outline-success'>Delivered</button>}
+                    {orderStatus==='myOrders' && <button className='btn btn-outline-danger OrderItem-btn' onClick={cancelOrder}>Cancel</button>}
+                    {orderStatus==='pending' && <button className='btn btn-outline-success OrderItem-btn' onClick={editOrder}>Deliver</button>}
+                    {orderStatus==='toDeliver' && <button className='btn btn-outline-success OrderItem-btn' onClick={removeOrder}>Delivered</button>}
                 </Card.Content>
             </Card>
         </div>

@@ -54,7 +54,7 @@ export default class Authform extends Component {
             if(this.props.register)
                 this.props.history.push("/profile")
             else
-                this.props.history.push('/orders')
+                this.props.history.push('/')
         })
         .catch(() => {
             this.setState({
@@ -75,7 +75,7 @@ export default class Authform extends Component {
             if(this.props.register)
                 this.props.history.push("/profile")
             else
-                this.props.history.push('/orders')
+                this.props.history.push('/')
         })
         .catch(() => {
             this.setState({

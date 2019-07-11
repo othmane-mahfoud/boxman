@@ -32,11 +32,11 @@ app.get('/api/orders', loginRequired, async function(req, res, next) {
     try {
         let orders = await db.Order.find()
         .sort({ createdAt: 'desc' })
-        .populate("customer", {
-            name: true,
-            address: true,
-            phoneNumber: true
-        })
+        // .populate("customer", {
+        //     name: true,
+        //     address: true,
+        //     phoneNumber: true
+        // })
         return res.status(200).json(orders)
     } catch(err) {
         return(next(err))

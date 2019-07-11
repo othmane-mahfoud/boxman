@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import '../styles/OrdersList.css'
 import { connect } from 'react-redux'
-import { fetchOrders, removeOrder } from '../store/actions/orders'
+import { NavLink } from 'react-router-dom'
+import { fetchOrders, removeOrder, editOrder } from '../store/actions/orders'
 import { Button, Header, Icon, Segment } from 'semantic-ui-react'
 import OrderItem from '../components/OrderItem'
 
@@ -11,11 +12,11 @@ class OrdersList extends Component {
         this.props.fetchOrders()
     }
     render() {
-        const { currentUser, orders, removeOrder } = this.props
+        const { currentUser, orders, removeOrder, editOrder } = this.props
         var filteredOrders
         var ordersList
         if(this.props.myOrders){
-            filteredOrders = orders.filter(order => (order.customer._id === currentUser.user.id))
+            filteredOrders = orders.filter(order => (order.customer === currentUser.user.id))
             ordersList = filteredOrders.map(order => (
                 <OrderItem 
                     key={order._id}
@@ -23,14 +24,15 @@ class OrdersList extends Component {
                     itemType={order.itemType}
                     deliveryType={order.deliveryType}
                     price={order.price}
-                    customer={order.customer.name}
+                    customer={order.customer}
                     from={order.from}
                     to={order.to}
                     description={order.description}
-                    cancelOrder={removeOrder.bind(this, order.customer._id, order._id)}
-                    isCorrectCustomer={currentUser.user.id === order.customer._id}
+                    cancelOrder={removeOrder.bind(this, currentUser.user.id, order._id)}
+                    isCorrectCustomer={currentUser.user.id === order.customer}
                     // removeOrder={removeOrder.bind(this, order.boxman._id, order._id)}
                     // isCorrectBoxman={currentUser.user.id === order.boxman._id}
+                    editOrder={editOrder.bind(this, currentUser.user.id, order._id)}
                     orderStatus='myOrders'
                 />
             ))
@@ -43,14 +45,14 @@ class OrdersList extends Component {
                                 Looks like you have no orders yet, need anything?<br/>
                                 Start ordering with BoxMan
                             </Header><br/>
-                            <button className='btn btn-outline-primary'>Start Ordering</button>
+                            <NavLink to={`/users/${currentUser.user.id}/orders/new`} className='btn btn-outline-primary'>Start Ordering</NavLink>
                         </div>
                     </div>
                 )
             }
         }
         else if(this.props.pending) {
-            filteredOrders = orders.filter(order => (order['boxman'] === undefined))
+            filteredOrders = orders.filter(order => (order['boxman'] === undefined) && (order.customer !== currentUser.user.id))
             ordersList = filteredOrders.map(order => (
                 <OrderItem 
                     key={order._id}
@@ -58,20 +60,33 @@ class OrdersList extends Component {
                     itemType={order.itemType}
                     deliveryType={order.deliveryType}
                     price={order.price}
-                    customer={order.customer.name}
+                    customer={order.customer}
                     from={order.from}
                     to={order.to}
                     description={order.description}
-                    cancelOrder={removeOrder.bind(this, order.customer._id, order._id)}
-                    isCorrectCustomer={currentUser.user.id === order.customer._id}
-                    // removeOrder={removeOrder.bind(this, order.boxman._id, order._id)}
+                    cancelOrder={removeOrder.bind(this, order.customer, order._id)}
+                    // isCorrectCustomer={currentUser.user.id === order.customer}
+                    removeOrder={removeOrder.bind(this, order.boxman, order._id)}
                     // isCorrectBoxman={currentUser.user.id === order.boxman._id}
+                    editOrder={editOrder.bind(this, currentUser.user.id, order._id)}
                     orderStatus='pending'
                 />
             ))
+            if(ordersList.length === 0) {
+                ordersList.push(
+                    <div className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
+                        <div class="container">
+                            <Header icon>
+                                <Icon name='wait' />
+                                Mmmm, looks like no one needs anything. Come check again later!
+                            </Header>
+                        </div>
+                    </div>
+                )
+            }
         }
         else {
-            filteredOrders = orders.filter(order => ((order['boxman'] !== undefined) && (order.boxman._id === currentUser.user.id)))
+            filteredOrders = orders.filter(order => ((order['boxman'] !== undefined) && (order.boxman === currentUser.user.id)))
             ordersList = filteredOrders.map(order => (
                 <OrderItem 
                     key={order._id}
@@ -79,22 +94,20 @@ class OrdersList extends Component {
                     itemType={order.itemType}
                     deliveryType={order.deliveryType}
                     price={order.price}
-                    customer={order.customer.name}
+                    customer={order.customer}
                     from={order.from}
                     to={order.to}
                     description={order.description}
-                    cancelOrder={removeOrder.bind(this, order.customer._id, order._id)}
-                    isCorrectCustomer={currentUser.user.id === order.customer._id}
-                    // removeOrder={removeOrder.bind(this, order.boxman._id, order._id)}
+                    cancelOrder={removeOrder.bind(this, order.customer, order._id)}
+                    isCorrectCustomer={currentUser.user.id === order.customer}
+                    removeOrder={removeOrder.bind(this, order.boxman, order._id)}
                     // isCorrectBoxman={currentUser.user.id === order.boxman._id}
+                    editOrder={editOrder.bind(this, currentUser.user.id, order._id)}
                     orderStatus='toDeliver'
                 />
             ))
             if(ordersList.length === 0) {
                 ordersList.push(
-                    // <Segment placeholder className='OrdersList-segment'>
-                        
-                    // </Segment>
                     <div className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
                         <div class="container">
                             <Header icon>
@@ -108,7 +121,7 @@ class OrdersList extends Component {
         }
         return (
             <div className='mt-3 mb-4 row'>
-                {ordersList.length === 0 ? 'No orders yet' : ordersList}
+                {ordersList}
             </div>
         )
     }
@@ -121,4 +134,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {fetchOrders, removeOrder})(OrdersList) 
+export default connect(mapStateToProps, {fetchOrders, removeOrder, editOrder})(OrdersList) 

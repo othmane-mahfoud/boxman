@@ -23,7 +23,7 @@ class Navbar extends Component {
     render() {
         const trigger = (
             <span className='Navbar-Dropdown-Name'>
-              <Icon name='user' /> Hello, Bob
+              <Icon name='user' /> Hello, {this.props.currentUser.user.name}
             </span>
           )
           
@@ -32,13 +32,13 @@ class Navbar extends Component {
               key: 'user',
               text: (
                 <span>
-                  Logged in as <strong>Bob Smith</strong>
+                  Logged in as <strong>{this.props.currentUser.user.name}</strong>
                 </span>
               ),
               disabled: true,
             },
             { key: 'profile', text: (<NavLink className='Navbar-Dropdown-Link' to='/profile'>Your Profile</NavLink>)},
-            { key: 'orders', text: (<NavLink className='Navbar-Dropdown-Link' to={`/orders`}>Your Orders</NavLink>) },
+            { key: 'orders', text: (<NavLink className='Navbar-Dropdown-Link' to='/'>Your Orders</NavLink>) },
             { key: 'newOrder', text: (<NavLink className='Navbar-Dropdown-Link' to={`/users/${this.props.currentUser.user.id}/orders/new`}>New Order</NavLink>) },
             { key: 'sign-out', text: <span onClick={this.logout}>Sign Out</span> }
         ]

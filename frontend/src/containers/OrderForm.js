@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import '../styles/OrderForm.css'
 import { Message, Form, Button, Header, Container, Input, TextArea, Select } from 'semantic-ui-react'
 import { addNewOrder } from '../store/actions/orders'
 import { withRouter } from 'react-router-dom'
@@ -37,14 +38,8 @@ class OrderForm extends Component {
 
     handleNewOrder = event => {
         event.preventDefault()
-        // this.props.postNewMessage(this.state.message)
-        // this.setState({
-        //     message: ""
-        // })
-        // this.props.history.push('/')
-        debugger
         this.props.addNewOrder(this.state)
-        this.props.history.push('/orders')
+        this.props.history.push('/')
     }
 
     render() {
@@ -119,7 +114,7 @@ class OrderForm extends Component {
                         value={description}
                         onChange={this.handleChange}
                     />
-                    <button className='OrderForm-submit btn-success' type='submit'>Order</button>
+                    <div className='OrderForm-center'><button className='OrderForm-submit btn' type='submit'>Order</button></div>
                 </Form>
             </Container>
         )

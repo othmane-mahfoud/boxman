@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 
-const { createOrder, getOrder, deleteOrder } = require("../handlers/orders");
+const { createOrder, getOrder, deleteOrder, editOrder } = require("../handlers/orders");
 
 // prefix - /api/users/:id/orders
 router.route("/").post(createOrder);
@@ -10,6 +10,7 @@ router.route("/").post(createOrder);
 router
   .route("/:order_id")
   .get(getOrder)
-  .delete(deleteOrder);
+  .delete(deleteOrder)
+  .put(editOrder)
 
 module.exports = router;

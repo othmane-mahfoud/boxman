@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Message, Form, Button, Header, Container, Input, TextArea, Select } from 'semantic-ui-react'
+import '../styles/OrderForm.css'
+import { Message, Form, Container, Input, TextArea, Select } from 'semantic-ui-react'
 import { addNewOrder } from '../store/actions/orders'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -12,7 +13,7 @@ class OrderForm extends Component {
             from: "",
             to: "",
             description: "",
-            deliveryType: "regular",
+            deliveryType: "Regular",
             price: 0
         }
     }
@@ -37,26 +38,23 @@ class OrderForm extends Component {
 
     handleNewOrder = event => {
         event.preventDefault()
-        // this.props.postNewMessage(this.state.message)
-        // this.setState({
-        //     message: ""
-        // })
-        // this.props.history.push('/')
-        debugger
         this.props.addNewOrder(this.state)
-        this.props.history.push('/orders')
+        this.props.history.push('/')
     }
 
     render() {
-        const { itemType, from, to, description, deliveryType, price } = this.state
+        const { itemType, from, to, description, deliveryType } = this.state
         const itemOptions = [
             { key: 0, text: 'Groceries', value: 'groceries' },
             { key: 1, text: 'Food', value: 'food' },
-            { key: 2, text: 'Other', value: 'other' },
+            { key: 2, text: 'Shopping', value: 'shopping'},
+            { key: 3, text: 'Courier', value: 'courier'},
+            { key: 4, text: 'Healthcare', value: 'healthcare'},
+            { key: 5, text: 'Other', value: 'other' },
         ]
         const deliveryOptions = [
-            { key: 0, text: 'Regular', value: 'regular' },
-            { key: 1, text: 'Express', value: 'express' },
+            { key: 0, text: 'Regular', value: 'Regular' },
+            { key: 1, text: 'Express', value: 'Express' },
         ]
         return (
             <Container>
@@ -119,7 +117,7 @@ class OrderForm extends Component {
                         value={description}
                         onChange={this.handleChange}
                     />
-                    <button className='OrderForm-submit btn-success' type='submit'>Order</button>
+                    <div className='OrderForm-center'><button className='OrderForm-submit btn' type='submit'>Order</button></div>
                 </Form>
             </Container>
         )

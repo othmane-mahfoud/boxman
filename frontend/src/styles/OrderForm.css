@@ -1,0 +1,25 @@
+.OrderForm-Header {
+    font-family: 'DM Sans', sans-serif;
+}
+
+.OrderForm-submit {
+    text-align: center;
+    margin: 0 auto;
+    background-color: #27B08A;
+    color: white;
+    border-radius: 30px;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    width: 10rem;
+}
+
+.OrderForm-submit:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}
+
+.OrderForm-center {
+    text-align: center
+}

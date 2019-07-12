@@ -1,5 +1,5 @@
 import { apiCall } from "../../services/api";
-import { SET_CURRENT_USER } from "../actionTypes";
+import { SET_CURRENT_USER, EDIT_USER } from "../actionTypes";
 import { addError, removeError } from "./errors";
 
 export function edit(user) {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Form, Icon, Image, Menu, Select } from 'semantic-ui-react'
+import { Form, Icon, Image, Select } from 'semantic-ui-react'
 import PlaceholderImg from '../images/profile-placeholder.jpg'
-import FileBase from 'react-file-base64';
+// import FileBase from 'react-file-base64';
 import '../styles/Profile.css'
 
 export default class Profile extends Component {
@@ -33,10 +33,9 @@ export default class Profile extends Component {
 
     handleSubmit(e) {
         e.preventDefault()
-        this.props.editUser(this.props.currentUser.user.id, this.state)
+        this.props.editUser(this.props.currentUser.user._id, this.state)
         .then(() => {
-            debugger
-            this.props.history.push('/orders')
+            this.props.history.push('/')
         })
         .catch(() => {
             this.setState({
@@ -65,7 +64,7 @@ export default class Profile extends Component {
             profileImageData: imageFormObj.get("profileImageData").name
         }
         debugger;
-        axios.put(`/api/users/${this.props.currentUser.user.id}/uploadmulter`, imageData)
+        axios.put(`/api/users/${this.props.currentUser.user._id}/uploadmulter`, imageData)
             .then((data) => {
                 if (data.data.success) {
                     alert("Image has been successfully uploaded using multer");
@@ -82,7 +81,7 @@ export default class Profile extends Component {
           profileImageUrl: files.base64.toString()
         });
         debugger;
-        axios.put(`/api/users/${this.props.currentUser.user.id}/uploadBase64`, { profileImageUrl: this.state.profileImageUrl })
+        axios.put(`/api/users/${this.props.currentUser.user._id}/uploadBase64`, { profileImageUrl: this.state.profileImageUrl })
           .then((data) => {
             if (data.data.success) {
               alert("Image has been successfully uploaded using base64 format");

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const User = require("./user");
+const db = require("./index");
 
 const orderSchema = new mongoose.Schema(
     {
@@ -43,14 +43,14 @@ const orderSchema = new mongoose.Schema(
 orderSchema.pre("remove", async function(next) {
     try {
         // find a user
-        let customer = await User.findById(this.customer)
-        let boxman = await User.findById(this.boxman)
+        let customer = await db.User.findById(this.customer)
+        let boxman = await db.User.findById(this.boxman)
         // remove the id of the message from their messages list
         customer.orders.remove(this.id)
-        boxman.orders.remove(this.id)
+        // boxman.orders.remove(this.id)
         // save that user
         await customer.save();
-        await boxman.save();
+        // await boxman.save();
         // return next
         return next();
     } catch (err) {

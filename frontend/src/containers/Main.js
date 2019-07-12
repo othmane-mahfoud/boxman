@@ -3,6 +3,7 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Homepage from '../components/Homepage'
 import Profile from '../components/Profile'
+import Map from '../components/Map'
 import OrderForm from './OrderForm'
 import { authUser } from '../store/actions/auth'
 import { removeError } from '../store/actions/errors'
@@ -17,6 +18,7 @@ const Main = props => {
             <Route exact path='/profile' render={(props) => <Profile editUser={editUser} currentUser={currentUser} {...props}/>}/>
             {/* <Route exact path='/orders' render={(props) => <OrdersTimeline currentUser={currentUser} {...props}/>}/> */}
             <Route exact path='/users/:id/orders/new' component={withAuth(OrderForm)} />
+            <Route exact path='/map' component={Map} />
         </Switch>
     ) 
 }

@@ -5,20 +5,18 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { setAuthorizationToken, setCurrentUser } from '../store/actions/auth'
 import '../styles/App.css'
-import Homepage from '../components/Homepage'
 import Navbar from './Navbar'
 import Main from './Main'
 
 const store = configureStore()
 
 if(localStorage.jwtToken) {
-  setAuthorizationToken(localStorage.jwtToken)
-  try {
-    store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)))
-  } catch(e) {
-    store.dispatch(setCurrentUser({}))
-  }
-
+    setAuthorizationToken(localStorage.jwtToken)
+    try {
+      store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)))
+    } catch(e) {
+      store.dispatch(setCurrentUser({}))
+    }
 }
 
 const App = (props) => {

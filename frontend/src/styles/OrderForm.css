@@ -14,6 +14,12 @@
     width: 10rem;
 }
 
+.OrderForm-submit:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}
+
 .OrderForm-center {
     text-align: center
 }

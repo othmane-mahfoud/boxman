@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../styles/OrderForm.css'
-import { Message, Form, Button, Header, Container, Input, TextArea, Select } from 'semantic-ui-react'
+import { Message, Form, Container, Input, TextArea, Select } from 'semantic-ui-react'
 import { addNewOrder } from '../store/actions/orders'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -43,11 +43,14 @@ class OrderForm extends Component {
     }
 
     render() {
-        const { itemType, from, to, description, deliveryType, price } = this.state
+        const { itemType, from, to, description, deliveryType } = this.state
         const itemOptions = [
             { key: 0, text: 'Groceries', value: 'groceries' },
             { key: 1, text: 'Food', value: 'food' },
-            { key: 2, text: 'Other', value: 'other' },
+            { key: 2, text: 'Shopping', value: 'shopping'},
+            { key: 3, text: 'Courier', value: 'courier'},
+            { key: 4, text: 'Healthcare', value: 'healthcare'},
+            { key: 5, text: 'Other', value: 'other' },
         ]
         const deliveryOptions = [
             { key: 0, text: 'Regular', value: 'Regular' },

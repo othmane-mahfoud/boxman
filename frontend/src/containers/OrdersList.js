@@ -3,7 +3,7 @@ import '../styles/OrdersList.css'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { fetchOrders, removeOrder, editOrder } from '../store/actions/orders'
-import { Button, Header, Icon, Segment } from 'semantic-ui-react'
+import { Header, Icon } from 'semantic-ui-react'
 import OrderItem from '../components/OrderItem'
 
 
@@ -16,7 +16,7 @@ class OrdersList extends Component {
         var filteredOrders
         var ordersList
         if(this.props.myOrders){
-            filteredOrders = orders.filter(order => (order.customer === currentUser.user.id))
+            filteredOrders = orders.filter(order => (order.customer === currentUser.user._id))
             ordersList = filteredOrders.map(order => (
                 <OrderItem 
                     key={order._id}
@@ -28,31 +28,31 @@ class OrdersList extends Component {
                     from={order.from}
                     to={order.to}
                     description={order.description}
-                    cancelOrder={removeOrder.bind(this, currentUser.user.id, order._id)}
-                    isCorrectCustomer={currentUser.user.id === order.customer}
+                    cancelOrder={removeOrder.bind(this, currentUser.user._id, order._id)}
+                    isCorrectCustomer={currentUser.user._id === order.customer}
                     // removeOrder={removeOrder.bind(this, order.boxman._id, order._id)}
                     // isCorrectBoxman={currentUser.user.id === order.boxman._id}
-                    editOrder={editOrder.bind(this, currentUser.user.id, order._id)}
+                    editOrder={editOrder.bind(this, currentUser.user._id, order._id)}
                     orderStatus='myOrders'
                 />
             ))
             if(ordersList.length === 0) {
                 ordersList.push(
-                    <div className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
-                        <div class="container">
+                    <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
+                        <div className="container">
                             <Header icon>
                                 <Icon name='shopping bag' />
                                 Looks like you have no orders yet, need anything?<br/>
                                 Start ordering with BoxMan
                             </Header><br/>
-                            <NavLink to={`/users/${currentUser.user.id}/orders/new`} className='btn btn-outline-primary'>Start Ordering</NavLink>
+                            <NavLink to={`/users/${currentUser.user._id}/orders/new`} className='OrdersList-submit outline green-white'>Start Ordering</NavLink>
                         </div>
                     </div>
                 )
             }
         }
         else if(this.props.pending) {
-            filteredOrders = orders.filter(order => (order['boxman'] === undefined) && (order.customer !== currentUser.user.id))
+            filteredOrders = orders.filter(order => (order['boxman'] === undefined) && (order.customer !== currentUser.user._id))
             ordersList = filteredOrders.map(order => (
                 <OrderItem 
                     key={order._id}
@@ -68,14 +68,14 @@ class OrdersList extends Component {
                     // isCorrectCustomer={currentUser.user.id === order.customer}
                     removeOrder={removeOrder.bind(this, order.boxman, order._id)}
                     // isCorrectBoxman={currentUser.user.id === order.boxman._id}
-                    editOrder={editOrder.bind(this, currentUser.user.id, order._id)}
+                    editOrder={editOrder.bind(this, currentUser.user._id, order._id)}
                     orderStatus='pending'
                 />
             ))
             if(ordersList.length === 0) {
                 ordersList.push(
-                    <div className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
-                        <div class="container">
+                    <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
+                        <div className="container">
                             <Header icon>
                                 <Icon name='wait' />
                                 Mmmm, looks like no one needs anything. Come check again later!
@@ -86,7 +86,7 @@ class OrdersList extends Component {
             }
         }
         else {
-            filteredOrders = orders.filter(order => ((order['boxman'] !== undefined) && (order.boxman === currentUser.user.id)))
+            filteredOrders = orders.filter(order => ((order['boxman'] !== undefined) && (order.boxman === currentUser.user._id)))
             ordersList = filteredOrders.map(order => (
                 <OrderItem 
                     key={order._id}
@@ -99,17 +99,17 @@ class OrdersList extends Component {
                     to={order.to}
                     description={order.description}
                     cancelOrder={removeOrder.bind(this, order.customer, order._id)}
-                    isCorrectCustomer={currentUser.user.id === order.customer}
+                    isCorrectCustomer={currentUser.user._id === order.customer}
                     removeOrder={removeOrder.bind(this, order.boxman, order._id)}
                     // isCorrectBoxman={currentUser.user.id === order.boxman._id}
-                    editOrder={editOrder.bind(this, currentUser.user.id, order._id)}
+                    editOrder={editOrder.bind(this, currentUser.user._id, order._id)}
                     orderStatus='toDeliver'
                 />
             ))
             if(ordersList.length === 0) {
                 ordersList.push(
-                    <div className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
-                        <div class="container">
+                    <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
+                        <div className="container">
                             <Header icon>
                                 <Icon name='shopping cart' />
                                 You're good to go, nothing to deliver for now

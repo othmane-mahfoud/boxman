@@ -67,7 +67,6 @@ export default class Authform extends Component {
     }
 
     handleFbLogin = (userData) => {
-        debugger
         const authType = this.props.register ? "fb_register" : "fb_login"
         this.props
         .onAuth(authType, userData)
@@ -93,7 +92,6 @@ export default class Authform extends Component {
                 if (responseLogin.authResponse) {
                     axios.get(`https://graph.facebook.com/${responseLogin.authResponse.userID}?fields=id,email,name&access_token=${responseLogin.authResponse.accessToken}`)
                     .then((response) => {
-                        debugger
                         let user = response.data
                         var userData = {
                             fbId: user.id,

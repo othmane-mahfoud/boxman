@@ -5,6 +5,9 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 import DefaultImage from '../images/profile-placeholder.jpg'
 import FoodImage from '../images/pasta.jpg'
 import GroceriesImage from '../images/groceries.jpg'
+import HealthImage from '../images/health.png'
+import CourierImage from '../images/courier.jpeg'
+import ShoppingImage from '../images/shopping.jpg'
 
 const OrderItem = (
     {
@@ -27,8 +30,18 @@ const OrderItem = (
     var orderImage = DefaultImage
     if (itemType === 'food') {
         orderImage = FoodImage
-    } else {
+    } 
+    else if(itemType === 'groceries'){
         orderImage = GroceriesImage
+    }
+    else if(itemType === 'shopping'){
+        orderImage = ShoppingImage
+    }
+    else if(itemType === 'courier'){
+        orderImage = CourierImage
+    }
+    else if(itemType === 'healthcare'){
+        orderImage = HealthImage
     }
     var deliveryIcon = deliveryType === 'Regular' ? <Icon name='wait'/> : <Icon name='shipping fast'/>
     return(

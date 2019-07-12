@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../styles/Navbar.css'
-import { Checkbox, Container, Dropdown, Icon, Menu, Modal } from 'semantic-ui-react'
+import { Container, Dropdown, Icon, Menu, Modal } from 'semantic-ui-react'
 import Authform from '../components/Authform'
 import { NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -39,7 +39,7 @@ class Navbar extends Component {
             },
             { key: 'profile', text: (<NavLink className='Navbar-Dropdown-Link' to='/profile'>Your Profile</NavLink>)},
             { key: 'orders', text: (<NavLink className='Navbar-Dropdown-Link' to='/'>Your Orders</NavLink>) },
-            { key: 'newOrder', text: (<NavLink className='Navbar-Dropdown-Link' to={`/users/${this.props.currentUser.user.id}/orders/new`}>New Order</NavLink>) },
+            { key: 'newOrder', text: (<NavLink className='Navbar-Dropdown-Link' to={`/users/${this.props.currentUser.user._id}/orders/new`}>New Order</NavLink>) },
             { key: 'sign-out', text: <span onClick={this.logout}>Sign Out</span> }
         ]
         const { authUser, errors, removeError, currentUser } = this.props

@@ -38,7 +38,7 @@ const Homepage = (props) => {
     }
     else {
         return(
-            <OrdersTimeline />
+            <OrdersTimeline currentUser={currentUser} {...props}/>
         )
     }
 }

@@ -22,7 +22,7 @@ exports.createOrder = async function(req, res, next) {
         //         address: true,
         //         phoneNumber: true
         //     })
-        return res.status(200).json(foundOrder)
+        return res.status(200).json(order)
     } catch(err) {
         return(next(err))
     }

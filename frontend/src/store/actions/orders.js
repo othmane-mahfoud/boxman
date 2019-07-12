@@ -52,7 +52,7 @@ export const fetchOrders = () => {
 
 export const addNewOrder = orderDetails => (dispatch, getState) => {
   let { currentUser } = getState();
-  const id = currentUser.user.id;
+  const id = currentUser.user._id;
   return apiCall("post", `/api/users/${id}/orders`, orderDetails)
     .then(res => {})
     .catch(err => addError(err.message));

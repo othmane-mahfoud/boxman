@@ -11,6 +11,9 @@ class OrdersTimeline extends Component{
             isLoading: false
         }
     }
+    componentWillMount() {
+        
+    }
     render(){
         return (
             <div className='OrdersTimeline container'>

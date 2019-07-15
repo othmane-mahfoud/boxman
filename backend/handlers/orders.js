@@ -31,7 +31,7 @@ exports.createOrder = async function(req, res, next) {
 // GET - /api/users/:id/orders/:order_id
 exports.getOrder = async function(req, res, next) {
     try {
-        let order = await db.Order.find(req.params.order_id)
+        let order = await db.Order.findById(req.params.order_id)
         return res.status(200).json(order)
     }
     catch (err) {

@@ -1,5 +1,6 @@
 import React from 'react'
 import Moment from 'react-moment'
+import {NavLink} from 'react-router-dom'
 import '../styles/OrderItem.css'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import DefaultImage from '../images/profile-placeholder.jpg'
@@ -11,6 +12,7 @@ import ShoppingImage from '../images/shopping.jpg'
 
 const OrderItem = (
     {
+        id,
         date, 
         itemType, 
         deliveryType, 
@@ -62,8 +64,9 @@ const OrderItem = (
                 </Card.Content>
                 <Card.Content extra>
                     {orderStatus==='myOrders' && <button className='btn btn-outline-danger OrderItem-btn' onClick={cancelOrder}>Cancel</button>}
-                    {orderStatus==='pending' && <button className='btn btn-outline-success OrderItem-btn' onClick={editOrder}>Deliver</button>}
+                    {orderStatus==='pending' && <button className='btn btn-outline-success OrderItem-btn' onClick={editOrder}>Pick Order</button>}
                     {orderStatus==='toDeliver' && <button className='btn btn-outline-success OrderItem-btn' onClick={removeOrder}>Delivered</button>}
+                    {orderStatus==='toDeliver' && <NavLink className='btn btn-outline-warning OrderItem-btn assistance-link' to={`/${id}/assistance`}>Assistance</NavLink>}
                 </Card.Content>
             </Card>
         </div>

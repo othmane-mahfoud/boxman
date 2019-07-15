@@ -1,3 +1,14 @@
 .OrderItem-btn {
     width: 100%;
 }
+
+.assistance-link {
+    text-align: center;
+    color: #27B08A
+}
+
+.assistance-link:hover {
+    text-decoration: none;
+    color: #27B08A;
+    text-align: center;
+}

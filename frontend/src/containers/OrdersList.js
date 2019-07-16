@@ -20,6 +20,7 @@ class OrdersList extends Component {
             ordersList = filteredOrders.map(order => (
                 <OrderItem 
                     key={order._id}
+                    id={order._id}
                     date={order.createdAt}
                     itemType={order.itemType}
                     deliveryType={order.deliveryType}
@@ -56,6 +57,7 @@ class OrdersList extends Component {
             ordersList = filteredOrders.map(order => (
                 <OrderItem 
                     key={order._id}
+                    id={order._id}
                     date={order.createdAt}
                     itemType={order.itemType}
                     deliveryType={order.deliveryType}
@@ -90,6 +92,7 @@ class OrdersList extends Component {
             ordersList = filteredOrders.map(order => (
                 <OrderItem 
                     key={order._id}
+                    id={order._id}
                     date={order.createdAt}
                     itemType={order.itemType}
                     deliveryType={order.deliveryType}

@@ -66,7 +66,7 @@ const OrderItem = (
                     {orderStatus==='myOrders' && <button className='btn btn-outline-danger OrderItem-btn' onClick={cancelOrder}>Cancel</button>}
                     {orderStatus==='pending' && <button className='btn btn-outline-success OrderItem-btn' onClick={editOrder}>Pick Order</button>}
                     {orderStatus==='toDeliver' && <button className='btn btn-outline-success OrderItem-btn' onClick={removeOrder}>Delivered</button>}
-                    {orderStatus==='toDeliver' && <NavLink className='btn btn-outline-warning OrderItem-btn assistance-link' to={`/${id}/assistance`}>Assistance</NavLink>}
+                    {orderStatus==='toDeliver' && <NavLink to={`/${id}/assistance`}><div className='btn btn-outline-warning OrderItem-btn'>Assistance</div></NavLink>}
                 </Card.Content>
             </Card>
         </div>

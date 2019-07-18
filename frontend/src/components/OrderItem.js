@@ -2,73 +2,84 @@ import React from 'react'
 import Moment from 'react-moment'
 import {NavLink} from 'react-router-dom'
 import '../styles/OrderItem.css'
-import { Card, Icon, Image } from 'semantic-ui-react'
-import DefaultImage from '../images/profile-placeholder.jpg'
-import FoodImage from '../images/pasta.jpg'
-import GroceriesImage from '../images/groceries.jpg'
-import HealthImage from '../images/health.png'
-import CourierImage from '../images/courier.jpeg'
-import ShoppingImage from '../images/shopping.jpg'
+import { Card, Icon, Image, List } from 'semantic-ui-react'
+import DefaultImage from '../images/pasta.jpg'
+import UserImg from '../images/user.png'
+// import FoodImage from '../images/pasta.jpg'
+// import GroceriesImage from '../images/groceries.jpg'
+// import HealthImage from '../images/health.png'
+// import CourierImage from '../images/courier.jpeg'
+// import ShoppingImage from '../images/shopping.jpg'
 
 const OrderItem = (
     {
         id,
         date, 
-        itemType, 
-        deliveryType, 
         from, 
+        items,
         to, 
         description, 
-        customer, 
-        price, 
-        isCorrectCustomer, 
-        // isCorrectBoxman, 
-        cancelOrder,
-        removeOrder,
-        orderStatus,
-        editOrder
+        minPrice,
+        maxPrice,
+        estimatedPrice,
+        status
     }
 ) => {
-    var orderImage = DefaultImage
-    if (itemType === 'food') {
-        orderImage = FoodImage
-    } 
-    else if(itemType === 'groceries'){
-        orderImage = GroceriesImage
-    }
-    else if(itemType === 'shopping'){
-        orderImage = ShoppingImage
-    }
-    else if(itemType === 'courier'){
-        orderImage = CourierImage
-    }
-    else if(itemType === 'healthcare'){
-        orderImage = HealthImage
-    }
-    var deliveryIcon = deliveryType === 'Regular' ? <Icon name='wait'/> : <Icon name='shipping fast'/>
+    const itemsList = items.map(item => (
+        <List.Item className='item'>{item.name}</List.Item>
+    ))
     return(
-        <div className='OrderItem col-sm-6 col-md-4 col-lg-3'>
-            <Card>
-                <Image src={orderImage} wrapped ui={false} />
-                <Card.Content>
-                    {/* <Card.Header>Matthew</Card.Header> */}
-                    <Card.Meta>
-                        <Moment format='Do MMM YYYY - HH:mm'>{date}</Moment><br />
-                        {deliveryType} {deliveryIcon}
-                    </Card.Meta>
-                    <Card.Description>
-                        <strong>From: </strong>{from} <br />
-                        <strong>To: </strong>{to} <br />
-                        <strong>Description: </strong>{description}
-                    </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                    {orderStatus==='myOrders' && <button className='btn btn-outline-danger OrderItem-btn' onClick={cancelOrder}>Cancel</button>}
-                    {orderStatus==='pending' && <button className='btn btn-outline-success OrderItem-btn' onClick={editOrder}>Pick Order</button>}
-                    {orderStatus==='toDeliver' && <button className='btn btn-outline-success OrderItem-btn' onClick={removeOrder}>Delivered</button>}
-                    {orderStatus==='toDeliver' && <NavLink to={`/${id}/assistance`}><div className='btn btn-outline-warning OrderItem-btn'>Assistance</div></NavLink>}
-                </Card.Content>
-            </Card>
+        <div className='OrderItem mb-2'>
+            <div class="card">
+                <div class="card-header bg-white">
+                    Order #1
+                </div>
+                <img src={DefaultImage} class="card-img-top" alt="..."></img>
+                <div class="card-body">
+                    <div className='row'>
+                        <div className='col-lg-6 col-sm-12'>
+                            <small className='text-muted'>
+                                <Moment format='Do MMM YYYY - HH:mm'>{date}</Moment>
+                            </small><br />
+                            <small className='text-muted'>
+                                Price: {minPrice} dhs - {maxPrice} dhs
+                            </small><br />
+                        </div>
+                        <div className='col-lg-6 col-sm-12'>
+                            <div className='boxman-area row pt-2'>
+                                <div className='col-2'>
+                                    <img src={UserImg} height='40px' width='40px'></img>
+                                </div>
+                                <div className='col-8'>
+                                    <span className='pl-2'>Hamid Lmardi</span><br/>
+                                    <small className='text-muted pl-2'>+2126874565</small>
+                                </div>
+                                <div className='col-2'>
+                                    <Icon className='mr-4 pt-2' name='phone' />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <Icon name='map marker alternate' />
+                    <small className='text-muted'>{from}</small>
+                    <p class="card-text pt-3">{description}</p>
+                    <List bulleted>
+                        {itemsList}
+                    </List>
+                </div>
+                <div class="card-footer bg-white">
+                    <div className='row'>
+                        <div className='estimationText col-6'>
+                            <div className='estimatedPriceText'>Estimated price</div>
+                            <div className='estimatedTimeText'>Estimated time and distance</div>
+                        </div>
+                        <div className='col-6'>
+                            <div className='estimatedPriceValue alignRight'>{estimatedPrice}</div>
+                            <div className='estimatedTimeValue alignRight'>25min</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

@@ -1,45 +1,24 @@
+/* Logged out */
+
 .Navbar {
-    background-color:#FDB636;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Ropa Sans', sans-serif;
+    min-height: 80px;
 }
 
 .Navbar-brand {
-    color: #27B08A;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 25px;
+    color: white;
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 35px;
     margin-left: 0px;
-}
-
-.Navbar-Dropdown {
-    color: #27B08A;
-}
-
-.Navbar-Dropdown-Name {
-    color: #27B08A;
-}
-
-.Navbar-Dropdown-Link {
-    color: black;
-}
-
-.Navbar-Dropdown-Link:hover, .Navbar-Dropdown-Link:active {
-    color: black;
-    text-decoration: none;
-}
-
-.Navbar-logged {
-    background-color: transparent;
-    font-family: 'Open Sans', sans-serif;
 }
 
 .Navbar-register {
     width: 10rem;
-    background-color: #27B08A;
+    background-color: #13916E;
     color: white;
     box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    border-radius: 30px;
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
 }
 
 .Navbar-register:hover {
@@ -51,11 +30,10 @@
 .Navbar-login {
     width: 10rem;
     background-color: white;
-    color: #27B08A;
+    color: #13916E;
     box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    border-radius: 30px;
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
 }
 
 .Navbar-login:hover {
@@ -65,6 +43,7 @@
 }
 
 .Navbar-modal {
+    font-family: 'Ropa Sans', sans-serif;
     height: auto;
     align-items: center;
     justify-content: center;
@@ -76,14 +55,47 @@
     padding-bottom: 1.5rem;
 }
 
-.Navbar-user {
-    color: #27B08A;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    text-align: center;
+/* Logged in */
+
+.Navbar-logged {
+    font-family: 'Ropa Sans', sans-serif;
 }
 
-.Navbar-user:hover {
-    text-decoration: underline;
-    color: #FDB636;
+.Navbar-brand-logged {
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 35px;
+
+}
+
+.Navbar-brand-logo-logged {
+    color: #419D78;
+    font-size: 35px;
+}
+
+.Navbar-notification-logged:hover {
+    color: #419D78;
+    transition: all .2s ease-in-out;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.Navbar-logout-logged:hover {
+    color: #419D78;
+    transition: all .2s ease-in-out;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.Navbar-avatar-logged:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.Navbar-username-logged {
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.Navbar-username-logged:hover {
+    color: #419D78;
 }

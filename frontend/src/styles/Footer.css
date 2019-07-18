@@ -1,5 +1,28 @@
 .Footer {
-    height: 200px;
-    background-color: #242424;
-    color: white;
+    min-height: 150px;
+    background-color:white;
+}
+
+.Footer-brand-name {
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 35px;
+    line-height: 150px;
+}
+
+.Footer-brand-logo {
+    color: #419D78;
+    font-size: 35px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+    width: 60px;
+    padding: 20px;
+    line-height: 150px;
 }

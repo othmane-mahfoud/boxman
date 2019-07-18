@@ -1,46 +1,117 @@
-import React from 'react' 
-import '../styles/Homepage.css'
-import HomepageFeature from './HomepageFeature'
+import React, { Component } from 'react'
 import OrdersTimeline from './OrdersTimeline'
-import SuperMarketImg from '../images/groceries.png'
-import ShopImg from '../images/price-tag.png'
-import CourierImg from '../images/delivery-man.png'
-import AnythingImg from '../images/magic-wand.png'
-import SelfcareImg from '../images/sun-lotion.png'
-import FoodImg from '../images/burger.png'
-  
-const Homepage = (props) => {
-    const { currentUser } = props
-    const features = [
-        {name: 'Supermarket', picture: SuperMarketImg},
-        {name: 'Shop', picture: ShopImg},
-        {name: 'Courier', picture: CourierImg},
-        {name: 'Anything', picture: AnythingImg},
-        {name: 'Self Care', picture: SelfcareImg},
-        {name: 'Food', picture: FoodImg}
-    ]
-    const featuresList = features.map((f,index) => (
-        <HomepageFeature key={index} name={f.name} picture={f.picture}/>
-    ))
-    if(!currentUser.isAuthenticated){
-        return (
-            <div className='Homepage'>
-                <div className='container pt-5'>
-                    <h1 className='Homepage-header'>BoxMan <i className="fa fa-map-marker" /></h1>
-                    <p className='Homepage-text'>Anything you want<br/>delivered in minutes</p>
-                    <div className='row'>
-                        {featuresList}
-                    </div>
-                </div>
-                <p className='Homepage-quote mt-5'><em>"The order is on you, the delivery is on us."</em></p>
-            </div>
-        ) 
+import Profile from './Profile'
+import FAQ from './FAQ'
+import '../styles/HomePage.css'
+
+export default class HomePage extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            activeNav: 'orders'
+        }
     }
-    else {
-        return(
-            <OrdersTimeline currentUser={currentUser} {...props}/>
-        )
+    render() {
+        const { currentUser, editUser } = this.props
+        const { activeNav } = this.state
+        if(currentUser.user.role === 'customer') {
+            return (
+                <div className='HomePage container pt-5'>
+                    {activeNav==='orders' && (
+                        <div className='HomePage-content row'>
+                            <div className="sidenav col-3">
+                                <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                    <span onClick={() => {this.setState({activeNav:'orders'})}} className="nav-link-active active" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">My Orders</span>
+                                    <span onClick={() => {this.setState({activeNav:'profile'})}} className="nav-link" id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</span>
+                                    <span onClick={() => {this.setState({activeNav:'addresses'})}} className="nav-link" id="v-pills-messages-tab" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false">Addresses</span>
+                                    <span onClick={() => {this.setState({activeNav:'faq'})}} className="nav-link" id="v-pills-settings-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false">FAQ</span>
+                                </div>
+                            </div>
+                            <div className="col-9">
+                                <div className="tab-content" id="v-pills-tabContent">
+                                    <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                        <OrdersTimeline />
+                                    </div>
+                                    <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Profile</div>
+                                    <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Address</div>
+                                    <div className="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">FAQ</div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {activeNav==='profile' && (
+                        <div className='HomePage-content row'>
+                            <div className="sidenav col-3">
+                                <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                    <span onClick={() => {this.setState({activeNav:'orders'})}} className="nav-link" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">My Orders</span>
+                                    <span onClick={() => {this.setState({activeNav:'profile'})}} className="nav-link-active active" id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</span>
+                                    <span onClick={() => {this.setState({activeNav:'addresses'})}} className="nav-link" id="v-pills-messages-tab" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false">Addresses</span>
+                                    <span onClick={() => {this.setState({activeNav:'faq'})}} className="nav-link" id="v-pills-settings-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false">FAQ</span>
+                                </div>
+                            </div>
+                            <div className="col-9">
+                                <div className="tab-content" id="v-pills-tabContent">
+                                    <div className="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">Orders</div>
+                                    <div className="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                        <Profile currentUser={currentUser} editUser={editUser} {...this.props}/>
+                                    </div>
+                                    <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Address</div>
+                                    <div className="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">FAQ</div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {activeNav==='addresses' && (
+                        <div className='HomePage-content row'>
+                            <div className="sidenav col-3">
+                                <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                    <span onClick={() => {this.setState({activeNav:'orders'})}} className="nav-link" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">My Orders</span>
+                                    <span onClick={() => {this.setState({activeNav:'profile'})}} className="nav-link" id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</span>
+                                    <span onClick={() => {this.setState({activeNav:'addresses'})}} className="nav-link-active active" id="v-pills-messages-tab" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false">Addresses</span>
+                                    <span onClick={() => {this.setState({activeNav:'faq'})}} className="nav-link" id="v-pills-settings-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false">FAQ</span>
+                                </div>
+                            </div>
+                            <div className="col-9">
+                                <div className="tab-content" id="v-pills-tabContent">
+                                    <div className="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">Orders</div>
+                                    <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Profile</div>
+                                    <div className="tab-pane fade show active" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Address</div>
+                                    <div className="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">FAQ</div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {activeNav==='faq' && (
+                        <div className='HomePage-content row'>
+                            <div className="sidenav col-3">
+                                <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                    <span onClick={() => {this.setState({activeNav:'orders'})}} className="nav-link" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">My Orders</span>
+                                    <span onClick={() => {this.setState({activeNav:'profile'})}} className="nav-link" id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</span>
+                                    <span onClick={() => {this.setState({activeNav:'addresses'})}} className="nav-link" id="v-pills-messages-tab" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false">Addresses</span>
+                                    <span onClick={() => {this.setState({activeNav:'faq'})}} className="nav-link-active active" id="v-pills-settings-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false">FAQ</span>
+                                </div>
+                            </div>
+                            <div className="col-9">
+                                <div className="tab-content" id="v-pills-tabContent">
+                                    <div className="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">Orders</div>
+                                    <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Profile</div>
+                                    <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Address</div>
+                                    <div className="tab-pane fade show active" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                                        <FAQ />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )
+        }
+        else {
+            return (
+                <div>
+                    Boxman page
+                </div>
+            )
+        }
     }
 }
-
-export default Homepage

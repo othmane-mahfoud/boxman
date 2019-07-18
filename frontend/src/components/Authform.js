@@ -47,7 +47,19 @@ export default class Authform extends Component {
 
     handleSubmit(e) {
         e.preventDefault()
-        const authType = this.props.register ? "register" : "login"
+        var authType
+        if(this.props.register && this.props.customer){
+            authType = "registerCustomer"
+        }
+        else if(this.props.register && this.props.boxman){
+            authType = "registerBoxman"
+        }
+        else if(this.props.login && this.props.customer){
+            authType = "loginCustomer"
+        }
+        else{
+            authType = "loginBoxman"
+        }
         this.props
         .onAuth(authType, this.state)
         .then(() => {
@@ -67,7 +79,19 @@ export default class Authform extends Component {
     }
 
     handleFbLogin = (userData) => {
-        const authType = this.props.register ? "fb_register" : "fb_login"
+        var authType
+        if(this.props.register && this.props.customer){
+            authType = "fbRegisterCustomer"
+        }
+        else if(this.props.register && this.props.boxman){
+            authType = "fbRegisterBoxman"
+        }
+        else if(this.props.login && this.props.customer){
+            authType = "fbLoginCustomer"
+        }
+        else{
+            authType = "fbLoginBoxman"
+        }
         this.props
         .onAuth(authType, userData)
         .then(() => {
@@ -144,10 +168,10 @@ export default class Authform extends Component {
                         <label htmlFor='password'>Password</label>
                         <input id='password' type='password' name='password' value={password} placeholder='Password' onChange={this.handleChange} required/>
                     </Form.Field>
-                    <div className='Authform-button-center'><button className='Authform-submit btn p-3' type='submit'>{buttonText} WITH EMAIL</button></div>
+                    <div className='Authform-button-center'><button className='Authform-submit btn' type='submit'><Icon name='mail'/>{buttonText} WITH EMAIL</button></div>
                 </Form>
                 <Divider horizontal>OR</Divider>
-                <div className='Authform-button-center'><button className='Authform-fb-button btn p-3' onClick={this.fbLogin}><Icon name='facebook f'/>{buttonText} WITH FACEBOOK</button></div>
+                <div className='Authform-button-center'><button className='Authform-fb-button btn' onClick={this.fbLogin}><Icon name='facebook f'/>{buttonText} WITH FACEBOOK</button></div>
             </Container>
         )
     }

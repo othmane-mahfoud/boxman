@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Navbar from './Navbar'
 import '../styles/OrderForm.css'
 import { Message, Form, List, Input, TextArea, Icon } from 'semantic-ui-react'
-import { addNewOrder } from '../store/actions/orders'
+import { addOrder } from '../store/actions/orders'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -17,7 +17,8 @@ class OrderForm extends Component {
             items: [],
             minPrice: '',
             maxPrice: '',
-            estimatedPrice: 0
+            estimatedPrice: 0,
+            success: false
         }
     }
     
@@ -38,8 +39,24 @@ class OrderForm extends Component {
             minPrice,
             maxPrice
         }
-        this.props.addNewOrder(order)
-        this.props.history.push('/')
+        this.props.addOrder(order)
+        .then(() => {
+            this.setState({ success: true })
+            this.props.history.push('/')
+        })
+        .catch(err => {
+            this.setState({
+                from: '',
+                to: '',
+                description: '',
+                newItem:'',
+                items: [],
+                minPrice: '',
+                maxPrice: '',
+                estimatedPrice: 0,
+                success: false
+            })
+        })
     }
 
     addItem = (e) => {
@@ -203,4 +220,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, {addNewOrder})(OrderForm))
+export default withRouter(connect(mapStateToProps, {addOrder})(OrderForm))

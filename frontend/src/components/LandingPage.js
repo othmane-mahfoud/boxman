@@ -1,13 +1,12 @@
 import React from 'react' 
 import '../styles/LandingPage.css'
-import OrdersTimeline from './OrdersTimeline'
 import HomePage from './HomePage'
 import Footer from './Footer'
 import Navbar from '../containers/Navbar'
 import PhoneImg from '../images/phone.png'
   
 const LandingPage = (props) => {
-    const { currentUser } = props
+    const { currentUser, editProfile } = props
     if(!currentUser.isAuthenticated){
         return(
             <div className='Homepage'>
@@ -61,7 +60,11 @@ const LandingPage = (props) => {
         return(
             <div>
                 <Navbar />
-                <HomePage currentUser={currentUser} {...props} />
+                    <HomePage 
+                        currentUser={currentUser}
+                        editProfile={editProfile}
+                        {...props} 
+                    />
                 <Footer />
             </div>
         )

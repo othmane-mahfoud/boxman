@@ -21,14 +21,14 @@ app.use(
 )
 
 app.use(
-    '/api/customers/:id',
+    '/api/customer/:id',
     loginRequired,
     ensureCorrectUser,
     customersRoutes
 );
 
 app.use(
-    '/api/boxmen/:id',
+    '/api/boxman/:id',
     loginRequired,
     ensureCorrectUser,
     boxmenRoutes

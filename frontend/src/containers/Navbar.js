@@ -129,7 +129,7 @@ class Navbar extends Component {
                                     <Icon className='Navbar-notification-logged' name='bell' />
                                 </Menu.Item>
                                 <Menu.Item>
-                                    <img className='Navbar-avatar-logged' src={UserImg} alt='user' height='30px' width='30px'/>
+                                    <img className='Navbar-avatar-logged' src={UserImg} alt='user' height='35px' width='30px'/>
                                     <span className='Navbar-username-logged pl-2'> {currentUser.user.name}</span>
                                 </Menu.Item>
                                 <Menu.Item>

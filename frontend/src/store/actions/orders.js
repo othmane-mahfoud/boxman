@@ -38,9 +38,9 @@ export const editOrder = (user_id, order_id) => {
     };
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = (user_id, role) => {
     return dispatch => {
-        return apiCall("get", "/api/orders")
+        return apiCall("get", `/api/${role}/${user_id}/orders`)
             .then(res => {
                 dispatch(loadOrders(res));
             })
@@ -50,10 +50,18 @@ export const fetchOrders = () => {
     };
 };
 
-export const addNewOrder = orderDetails => (dispatch, getState) => {
-  let { currentUser } = getState();
-  const id = currentUser.user._id;
-  return apiCall("post", `/api/users/${id}/orders`, orderDetails)
-    .then(res => {})
-    .catch(err => addError(err.message));
-};
+// export const addNewOrder = orderDetails => (dispatch, getState) => {
+//   let { currentUser } = getState();
+//   const id = currentUser.user._id;
+//   return apiCall("post", `/api/users/${id}/orders`, orderDetails)
+//     .then(res => {})
+//     .catch(err => addError(err.message));
+// };
+
+export const addOrder = orderDetails => (dispatch, getState) => {
+    let { currentUser } = getState();
+    const id = currentUser.user._id;
+    return apiCall("post", `/api/customer/${id}/orders`, orderDetails)
+      .then(res => {})
+      .catch(err => addError(err.message));
+  };

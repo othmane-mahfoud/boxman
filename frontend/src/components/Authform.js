@@ -63,10 +63,7 @@ export default class Authform extends Component {
         this.props
         .onAuth(authType, this.state)
         .then(() => {
-            if(this.props.register)
-                this.props.history.push("/profile")
-            else
-                this.props.history.push('/')
+            this.props.push('/')
         })
         .catch(() => {
             this.setState({
@@ -96,7 +93,7 @@ export default class Authform extends Component {
         .onAuth(authType, userData)
         .then(() => {
             if(this.props.register)
-                this.props.history.push("/profile")
+                this.props.history.push("/")
             else
                 this.props.history.push('/')
         })
@@ -122,6 +119,7 @@ export default class Authform extends Component {
                             name: user.name,
                             email: user.email
                         }
+                        debugger
                         this.handleFbLogin(userData)
                     })
                     .catch((error) => {

@@ -18,8 +18,8 @@ router.post('/registerCustomer', registerCustomer)
 router.post('/loginBoxman', loginBoxman)
 router.post('/loginCustomer', loginCustomer)
 router.post('/fbRegisterBoxman', fbRegisterBoxman)
-router.post('/fbRegisterBoxman', fbRegisterCustomer)
-router.post('/fbLoginCustomer', fbLoginBoxman)
+router.post('/fbRegisterCustomer', fbRegisterCustomer)
+router.post('/fbLoginBoxman', fbLoginBoxman)
 router.post('/fbLoginCustomer', fbLoginCustomer)
 
 module.exports = router

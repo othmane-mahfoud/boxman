@@ -152,9 +152,9 @@ exports.loginCustomer = async function(req, res, next) {
 exports.fbRegisterBoxman = async function(req, res, next) {
     try {
         let boxman = await db.Boxman.create({
+            fbId: req.body.fbId,
             email: req.body.email,
             name: req.body.name,
-            password: req.body.password,
             role: "boxman"
         });
         let { _id, fbId, email, name, role } = boxman;
@@ -190,9 +190,9 @@ exports.fbRegisterBoxman = async function(req, res, next) {
 exports.fbRegisterCustomer = async function(req, res, next) {
     try {
         let customer = await db.Customer.create({
+            fbId: req.body.fbId,
             email: req.body.email,
             name: req.body.name,
-            password: req.body.password,
             role: "customer"
         });
         let { _id, fbId, email, name, role } = customer;

@@ -71,3 +71,9 @@ exports.editProfile = async function(req, res, next) {
         });
     }
 }
+
+// Utilities
+
+exports.updateCurrentLocation = async function(req, res, next) {
+    //here we update boxman location every 5s
+}

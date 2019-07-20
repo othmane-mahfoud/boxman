@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import OrdersTimeline from './OrdersTimeline'
 import Profile from './Profile'
 import FAQ from './FAQ'
-import '../styles/HomePage.css'
+import '../styles/Homepage.css'
 
-export default class HomePage extends Component {
+export default class Homepage extends Component {
     constructor(props) {
         super(props)
         this.state = {

@@ -1,6 +1,6 @@
 import React from 'react' 
 import '../styles/LandingPage.css'
-import HomePage from './HomePage'
+import Homepage from './Homepage'
 import Footer from './Footer'
 import Navbar from '../containers/Navbar'
 import PhoneImg from '../images/phone.png'
@@ -60,7 +60,7 @@ const LandingPage = (props) => {
         return(
             <div>
                 <Navbar />
-                    <HomePage 
+                    <Homepage
                         currentUser={currentUser}
                         editProfile={editProfile}
                         {...props} 

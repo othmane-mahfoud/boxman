@@ -11,6 +11,10 @@ const boxmenRoutes = require('./routes/boxman')
 const errorHandler = require('./handlers/error')
 const { loginRequired, ensureCorrectUser } = require("./middlewares/auth");
 
+const server = require('http').createServer();
+server.listen(8000);
+const io = require('socket.io')(server)
+
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -45,3 +49,22 @@ app.use(errorHandler);
 app.listen(port, function() {
     console.log(`server listening on port ${port}`)
 })
+
+// io.on('connect', (socket) => {
+//     console.log('we did it')
+//     socket.emit('event', {data: 'inside event'});
+//     socket.on('client', data => {
+//         console.log(data)
+//     })
+// });
+
+
+//server receiving update every 3
+io.on("connect", socket => {
+    socket.on("updateLocation", async (data) => {
+        console.log(data)
+    });
+    socket.on("other", () => {
+        console.log('other')
+    })
+});

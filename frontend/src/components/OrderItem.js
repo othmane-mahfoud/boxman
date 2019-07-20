@@ -37,15 +37,15 @@ class OrderItem extends Component {
     render() {
         const { id, index, date, from, items, to, description, minPrice, maxPrice, estimatedPrice, estimatedDuration, estimatedDistance, status, currentUser } = this.props
         const itemsList = items.map(item => (
-            <List.Item className='item'>{item.name}</List.Item>
+            <List.Item key={item._id} className='item'>{item.name}</List.Item>
         ))
         return(
-            <div className='OrderItem mb-2 ml-1'>
-                <div class="card">
-                    <div class="card-header bg-white">
+            <div className='OrderItem mb-3 ml-1'>
+                <div className="card">
+                    <div className="card-header bg-white">
                         Order #{index+1}
                     </div>
-                    <div class="card-body">
+                    <div className="card-body">
                         <div className='row'>
                             <div className='col-lg-6 col-sm-12'>
                                 <small className='text-muted'>
@@ -56,7 +56,7 @@ class OrderItem extends Component {
                                 </small><br />
                                 <Icon name='map marker alternate' />
                                 <small className='text-muted'>{from}</small>
-                                <p class="card-text pt-3">{description}</p>
+                                <p className="card-text pt-3">{description}</p>
                                 <List bulleted>
                                     {itemsList}
                                 </List>
@@ -87,7 +87,7 @@ class OrderItem extends Component {
                         </div>
 
                     </div>
-                    <div class="card-footer bg-white">
+                    <div className="card-footer bg-white">
                         <div className='row'>
                             <div className='estimationText col-6'>
                                 <div className='estimatedPriceText'>Estimated price</div>

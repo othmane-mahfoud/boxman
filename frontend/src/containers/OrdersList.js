@@ -6,7 +6,6 @@ import { fetchOrders, editOrder } from '../store/actions/orders'
 import { Header, Icon } from 'semantic-ui-react'
 import OrderItem from '../components/OrderItem'
 
-
 class OrdersList extends Component {
     componentDidMount() {
         this.props.fetchOrders(this.props.currentUser.user._id, this.props.currentUser.user.role)

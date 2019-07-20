@@ -1,15 +1,21 @@
 const db = require('../models')
 const jwt = require('jsonwebtoken')
 
-exports.register = async function(req, res, next) {
+exports.registerBoxman = async function(req, res, next) {
     try {
-        let user = await db.User.create(req.body);
-        let { _id, email, name } = user;
+        let boxman = await db.Boxman.create({
+            email: req.body.email,
+            name: req.body.name,
+            password: req.body.password,
+            role: "boxman"
+        });
+        let { _id, email, name, role} = boxman;
         let token = jwt.sign(
             {
                 _id,
                 email,
                 name,
+                role
             },
             process.env.SECRET_KEY
         );
@@ -17,6 +23,7 @@ exports.register = async function(req, res, next) {
             _id,
             email,
             name,
+            role,
             token
         });
     } catch (err) {
@@ -30,19 +37,56 @@ exports.register = async function(req, res, next) {
     }
 }
 
-exports.login = async function(req, res, next) {
+exports.registerCustomer = async function(req, res, next) {
     try {
-        let user = await db.User.findOne({
+        let customer = await db.Customer.create({
+            email: req.body.email,
+            name: req.body.name,
+            password: req.body.password,
+            role: "customer"
+        })
+        let { _id, email, name, role } = customer;
+        let token = jwt.sign(
+            {
+                _id,
+                email,
+                name,
+                role
+            },
+            process.env.SECRET_KEY
+        );
+        return res.status(200).json({
+            _id,
+            email,
+            name,
+            role,
+            token
+        });
+    } catch (err) {
+        if (err.code === 11000) {
+            err.message = "Sorry, that username and/or email is taken";
+        }
+        return next({
+            status: 400,
+            message: err.message
+        });
+    }
+}
+
+exports.loginBoxman = async function(req, res, next) {
+    try {
+        let boxman = await db.Boxman.findOne({
             email: req.body.email
         });
-        let { _id, email, name } = user;
-        let isMatch = await user.comparePassword(req.body.password);
+        let { _id, email, name, role } = boxman;
+        let isMatch = await boxman.comparePassword(req.body.password);
         if (isMatch) {
             let token = jwt.sign(
                 {
                     _id,
                     email,
                     name,
+                    role
                 },
                 process.env.SECRET_KEY
             );
@@ -50,6 +94,7 @@ exports.login = async function(req, res, next) {
                 _id,
                 email,
                 name,
+                role,
                 token
             });
         } else {
@@ -66,16 +111,60 @@ exports.login = async function(req, res, next) {
     }
 }
 
-exports.fbRegister = async function(req, res, next) {
+exports.loginCustomer = async function(req, res, next) {
     try {
-        let user = await db.User.create(req.body);
-        let { _id, fbId, email, name } = user;
+        let customer = await db.Customer.findOne({
+            email: req.body.email
+        });
+        let { _id, email, name, role } = customer;
+        let isMatch = await customer.comparePassword(req.body.password);
+        if (isMatch) {
+            let token = jwt.sign(
+                {
+                    _id,
+                    email,
+                    name,
+                    role
+                },
+                process.env.SECRET_KEY
+            );
+            return res.status(200).json({
+                _id,
+                email,
+                name,
+                role,
+                token
+            });
+        } else {
+            return next({
+                status: 400,
+                message: "Invalid Email/Password."
+            });
+        }
+    } catch (e) {
+        return next({
+            status: 400,
+            message: "Invalid Email/Password."
+        });
+    }
+}
+
+exports.fbRegisterBoxman = async function(req, res, next) {
+    try {
+        let boxman = await db.Boxman.create({
+            fbId: req.body.fbId,
+            email: req.body.email,
+            name: req.body.name,
+            role: "boxman"
+        });
+        let { _id, fbId, email, name, role } = boxman;
         let token = jwt.sign(
             {
                 _id,
                 fbId,
                 email,
-                name
+                name,
+                role
             },
             process.env.SECRET_KEY
         );
@@ -84,6 +173,7 @@ exports.fbRegister = async function(req, res, next) {
             fbId,
             email,
             name,
+            role,
             token
         });
     } catch (err) {
@@ -97,18 +187,22 @@ exports.fbRegister = async function(req, res, next) {
     }
 }
 
-exports.fbLogin = async function(req, res, next) {
+exports.fbRegisterCustomer = async function(req, res, next) {
     try {
-        let user = await db.User.findOne({
-            fbId: req.body.fbId
+        let customer = await db.Customer.create({
+            fbId: req.body.fbId,
+            email: req.body.email,
+            name: req.body.name,
+            role: "customer"
         });
-        let { _id, fbId, email, name } = user;
+        let { _id, fbId, email, name, role } = customer;
         let token = jwt.sign(
             {
                 _id,
                 fbId,
                 email,
-                name
+                name,
+                role
             },
             process.env.SECRET_KEY
         );
@@ -117,6 +211,74 @@ exports.fbLogin = async function(req, res, next) {
             fbId,
             email,
             name,
+            role,
+            token
+        });
+    } catch (err) {
+        if (err.code === 11000) {
+            err.message = "You have registered previously";
+        }
+        return next({
+            status: 400,
+            message: err.message
+        });
+    }
+}
+
+exports.fbLoginBoxman = async function(req, res, next) {
+    try {
+        let boxman = await db.Boxman.findOne({
+            fbId: req.body.fbId
+        });
+        let { _id, fbId, email, name, role } = boxman;
+        let token = jwt.sign(
+            {
+                _id,
+                fbId,
+                email,
+                name,
+                role
+            },
+            process.env.SECRET_KEY
+        );
+        return res.status(200).json({
+            _id,
+            fbId,
+            email,
+            name,
+            role,
+            token
+        });
+    } catch (e) {
+        return next({
+            status: 400,
+            message: "Invalid Email/Password."
+        });
+    }
+}
+
+exports.fbLoginCustomer = async function(req, res, next) {
+    try {
+        let customer = await db.Customer.findOne({
+            fbId: req.body.fbId
+        });
+        let { _id, fbId, email, name, role } = customer;
+        let token = jwt.sign(
+            {
+                _id,
+                fbId,
+                email,
+                name,
+                role
+            },
+            process.env.SECRET_KEY
+        );
+        return res.status(200).json({
+            _id,
+            fbId,
+            email,
+            name,
+            role,
             token
         });
     } catch (e) {

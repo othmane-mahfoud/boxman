@@ -1,29 +1,33 @@
-.Homepage {
-    background-color:#FDB636;
-    font-family: 'Open Sans', sans-serif;
-    height: 100vh;
+.HomePage {
+    min-height: 90vh;
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 17px;
 }
 
-.Homepage-header {
-    text-align: center;
-    font-size: 45px;
-    font-weight: 700;
-    font-family: 'Open Sans', sans-serif;
-    color: #13916E;
+.HomePage-content {
+    padding-top: 50px;
+    min-height: 50%;
 }
 
-.Homepage-text {
-    text-align: center;
-    color: white;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 60px;
+.nav-link {
+    background-color: transparent;
+    color: black;
+    padding-left: 2rem; 
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    cursor: pointer;
 }
 
-.Homepage-quote {
-    font-size: 30px;
-    color: #242424;
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    background-color: #FDB636;
+.nav-link-active {
+   background-color: #419D78;
+   color: white;
+   padding-left: 2rem; 
+   padding-top: 1rem;
+   padding-bottom: 1rem;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+.nav-link-active {
+    cursor: pointer;
 }

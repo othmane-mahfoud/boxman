@@ -5,24 +5,22 @@
 
 .Authform-header {
     text-align: center;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Ropa Sans', sans-serif;
     font-weight: 400;
 }
 
 .Authform-form {
     padding-left: 20px;
     padding-right: 20px;
+    font-family: 'Ropa Sans', sans-serif;
 }
 
 .Authform-submit {
-    text-align: center;
-    margin: 0 auto;
-    background-color: #27B08A;
+    background-color: #13916E;
     color: white;
-    border-radius: 30px;
     box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
 }
 
 .Authform-submit:hover {
@@ -43,14 +41,11 @@
 }
 
 .Authform-fb-button {
-    text-align: center;
-    margin: 0 auto;
     background-color: #4e71ba;
     color: white;
-    border-radius: 30px;
     box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
 }
 
 .Authform-fb-button:hover {

@@ -1,12 +1,7 @@
 const mongoose = require("mongoose");
-const db = require("./index");
 
 const orderSchema = new mongoose.Schema(
     {
-        itemType: {
-            type: String,
-            default: "other"
-        },
         from: {
             type: String,
             required: true
@@ -19,20 +14,43 @@ const orderSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        deliveryType: {
+        items: [
+            {
+                name: String,
+                picked: {
+                    type: Boolean,
+                    default: false
+                }
+            }
+        ],
+        status: {
             type: String,
-            required: true
+            default: "none"
         },
-        price: {
+        minPrice: {
+            type: Number,
+            min: [0, 'Input a valid price']
+        },
+        maxPrice: {
+            type: Number,
+            min: [0, 'Input a valid price']
+        },
+        estimatedPrice: {
             type: Number
+        },
+        estimatedDistance: {
+            type: String
+        },
+        estimatedDuration: {
+            type: String
         },
         customer: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: "Customer"
         },
         boxman: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: "Boxman"
         },
     },
     {
@@ -40,23 +58,6 @@ const orderSchema = new mongoose.Schema(
     }
 )
 
-orderSchema.pre("remove", async function(next) {
-    try {
-        // find a user
-        let customer = await db.User.findById(this.customer)
-        let boxman = await db.User.findById(this.boxman)
-        // remove the id of the message from their messages list
-        customer.orders.remove(this.id)
-        // boxman.orders.remove(this.id)
-        // save that user
-        await customer.save();
-        // await boxman.save();
-        // return next
-        return next();
-    } catch (err) {
-        return next(err);
-    }
-});
-
 const Order = mongoose.model("Order", orderSchema);
+
 module.exports = Order;

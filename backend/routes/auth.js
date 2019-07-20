@@ -1,10 +1,25 @@
 const express = require('express')
 const router  = express.Router()
-const { register, login, fbRegister, fbLogin } = require('../handlers/auth')
+const { 
+    registerBoxman, 
+    registerCustomer, 
+    loginBoxman, 
+    loginCustomer, 
+    fbRegisterBoxman, 
+    fbRegisterCustomer, 
+    fbLoginBoxman, 
+    fbLoginCustomer 
+} = require('../handlers/auth')
 
-router.post('/register', register)
-router.post('/login', login)
-router.post('/fb_register', fbRegister)
-router.post('/fb_login', fbLogin)
+// Prefix - /api/auth
+
+router.post('/registerBoxman', registerBoxman)
+router.post('/registerCustomer', registerCustomer)
+router.post('/loginBoxman', loginBoxman)
+router.post('/loginCustomer', loginCustomer)
+router.post('/fbRegisterBoxman', fbRegisterBoxman)
+router.post('/fbRegisterCustomer', fbRegisterCustomer)
+router.post('/fbLoginBoxman', fbLoginBoxman)
+router.post('/fbLoginCustomer', fbLoginCustomer)
 
 module.exports = router

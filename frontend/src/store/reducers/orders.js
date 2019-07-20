@@ -9,7 +9,7 @@ const order = (state = [], action) => {
         case EDIT_ORDER:
             const newState = state.map(order => 
                 order._id === action.order_id
-                ? {...order, boxman: action.user_id}
+                ? action.order
                 : order
             )
             return newState;

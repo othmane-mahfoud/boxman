@@ -1,65 +1,50 @@
+.OrderItem {
+    width: 95%;
+}
+
+.boxman-area {
+    max-width: 90%;
+    margin: 0 auto;
+    background-color: #F1F1F1;
+    font-size: 16px;
+    border-radius: 3px;
+}
+
+.boxman-name {
+    margin: 0 auto;
+}
+
+.item {
+    font-size: 16px;
+}
+
+.card-header {
+    color: #419D78;
+}
+
+.mapContainer {
+    width: 80%;
+    margin: 0 auto;
+    height: 200px;
+}
+
 .OrderItem-btn {
-    width: 100%;
-    cursor: pointer;
-    outline: none;
-}
-
-
-/* .OrdersItem-submit {
-    cursor: pointer;
-    outline: none; 
-    width: 100%;
-}
-
-.outline {
-    position: relative;
-    z-index: 3;
-    background: transparent;
-    color: #1172c4;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    border-color: #1172c4;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 22px;
-    padding: 10px 40px;
-    text-transform: uppercase;
-    transition: all 0.2s linear;
-}
-
-.green-white {
-    font-weight: 700;
-    color: #27B08A;
-    border-color: #27B08A;
-    background: transparent;
-    text-decoration: none;
-}
-
-.green-white:hover {
+    width: 90%;
+    background-color: #419D78;
     color: white;
-    background: #27B08A;
-    border-color: #27B08A;
-    text-decoration: none
-} */
+    border-radius: 3px;
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
+    margin: 0 auto;
+}
 
+.centerBtn {
+    text-align: center;
+}
 
-
-.OrderItem-btn:hover{
-    cursor: pointer;
-    outline: none; 
-    width: 100%;
+.OrderItem-btn:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
     color: white;
 }
 
-.OrderItem-btn:active{
-    cursor: pointer;
-    outline: none; 
-    width: 100%;
-    color: white;
-}
-
-.OrderItem-btn:selected{
-    cursor: pointer;
-    outline: none; 
-    width: 100%;
-}

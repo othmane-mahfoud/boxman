@@ -1,0 +1,150 @@
+.Homepage {
+    /* background-color:#FDB636;
+    font-family: 'Open Sans', sans-serif;
+    height: 100vh; */
+}
+
+.Homepage-cover {
+    height: 680px;	
+    width: 100%;	
+    background: linear-gradient(0deg, #000000 0%, rgba(0,0,0,0.42) 100%);
+    background-image: url('../images/boxmancover.png')
+}
+
+.Homepage-description {
+    display: block;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 80px;
+    width: 50%;
+}
+
+.Homepage-description-text {
+    color: white;
+    font-family: 'Ropa Sans', sans-serif;
+    text-align: center;
+    font-size: 34px;
+    line-height: 40px;
+}
+
+.Homepage-how {
+    position: relative;
+    background-color: white;
+    width: 100%;
+    min-height: 200px;
+    margin-bottom: 30px;
+}
+
+
+.Homepage-how-header {
+    margin: 0 auto;
+}
+
+.Homepage-how-header-text {
+    text-align: center;
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 37px;
+}
+
+.Homepage-how-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 26px;
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.Homepage-how-description {
+    text-align: center;
+    font-size: 18px;
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.Homepage-download {
+    position: relative;
+    background-color: #419D78;
+    width: 100%;
+    min-height: 250px;
+}
+
+.Homepage-download-phone {
+    margin: 0 auto;
+}
+
+.Homepage-download-phone-img {
+    /* transform: rotate(20deg); */
+}
+
+.Homepage-download-text {
+    color: white;
+    font-family: 'Ropa Sans', sans-serif;
+    text-align: left;
+    font-size: 34px;
+    display: block;
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Homepage-btn-group {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.customer-register {
+    width: 10rem;
+    background-color: #13916E;
+    color: white;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
+}
+
+.customer-register:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}
+
+.boxman-register {
+    width: 10rem;
+    background-color: white;
+    color: #13916E;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
+}
+
+.boxman-register:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: #27B08A;
+}
+
+.Homepage-header {
+    text-align: center;
+    font-size: 45px;
+    font-weight: 700;
+    font-family: 'Open Sans', sans-serif;
+    color: #13916E;
+}
+
+.Homepage-text {
+    text-align: center;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 60px;
+}
+
+.Homepage-quote {
+    font-size: 30px;
+    color: #242424;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    background-color: #FDB636;
+}

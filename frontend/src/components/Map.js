@@ -158,7 +158,7 @@ export default class Map extends Component {
             window.alert('Directions request failed due to ' + status);
           }
         });
-      }
+    }
 
     handleLocationError(browserHasGeolocation, infoWindow, pos, map) {
         window.infoWindow.setPosition(pos);

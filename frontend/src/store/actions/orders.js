@@ -12,10 +12,10 @@ export const remove = id => ({
     id
 });
 
-export const edit = (user_id, order_id) => ({
+export const edit = (order_id, order) => ({
     type: EDIT_ORDER,
-    user_id,
-    order_id
+    order_id,
+    order
 })
 
 export const removeOrder = (user_id, order_id) => {
@@ -28,19 +28,21 @@ export const removeOrder = (user_id, order_id) => {
     };
 };
 
-export const editOrder = (user_id, order_id) => {
+export const editOrder = (user_id, role, order_id, data) => {
     return dispatch => {
-        return apiCall("put", `/api/users/${user_id}/orders/${order_id}`, {boxman: user_id})
-            .then(() => dispatch(edit(user_id, order_id)))
+        return apiCall("put", `/api/${role}/${user_id}/orders/${order_id}`, data)
+            .then(order => {
+                dispatch(edit(order_id, order))
+            })
             .catch(err => {
                 addError(err.message);
             });
     };
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = (user_id, role) => {
     return dispatch => {
-        return apiCall("get", "/api/orders")
+        return apiCall("get", `/api/${role}/${user_id}/orders`)
             .then(res => {
                 dispatch(loadOrders(res));
             })
@@ -50,10 +52,10 @@ export const fetchOrders = () => {
     };
 };
 
-export const addNewOrder = orderDetails => (dispatch, getState) => {
-  let { currentUser } = getState();
-  const id = currentUser.user._id;
-  return apiCall("post", `/api/users/${id}/orders`, orderDetails)
-    .then(res => {})
-    .catch(err => addError(err.message));
-};
+export const addOrder = orderDetails => (dispatch, getState) => {
+    let { currentUser } = getState();
+    const id = currentUser.user._id;
+    return apiCall("post", `/api/customer/${id}/orders`, orderDetails)
+      .then(res => {})
+      .catch(err => addError(err.message));
+  };

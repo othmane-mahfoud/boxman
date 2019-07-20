@@ -1,76 +1,109 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Moment from 'react-moment'
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import { Card, Icon, Image, List } from 'semantic-ui-react'
 import '../styles/OrderItem.css'
-import { Card, Icon, Image } from 'semantic-ui-react'
-import DefaultImage from '../images/profile-placeholder.jpg'
-import FoodImage from '../images/pasta.jpg'
-import GroceriesImage from '../images/groceries.jpg'
-import HealthImage from '../images/health.png'
-import CourierImage from '../images/courier.jpeg'
-import ShoppingImage from '../images/shopping.jpg'
+import DefaultImage from '../images/pasta.jpg'
+import UserImg from '../images/user.png'
+// import FoodImage from '../images/pasta.jpg'
+// import GroceriesImage from '../images/groceries.jpg'
+// import HealthImage from '../images/health.png'
+// import CourierImage from '../images/courier.jpeg'
+// import ShoppingImage from '../images/shopping.jpg'
 
-const OrderItem = (
-    {
-        id,
-        date, 
-        itemType, 
-        deliveryType, 
-        from, 
-        to, 
-        description, 
-        customer, 
-        price, 
-        isCorrectCustomer, 
-        // isCorrectBoxman, 
-        cancelOrder,
-        removeOrder,
-        orderStatus,
-        editOrder
+class OrderItem extends Component {
+    pickOrder = () => {
+        const {currentUser, id} = this.props
+        this.props.editOrder(currentUser.user._id, currentUser.user.role, id, { status: 'picked' })
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
-) => {
-    var orderImage = DefaultImage
-    if (itemType === 'food') {
-        orderImage = FoodImage
-    } 
-    else if(itemType === 'groceries'){
-        orderImage = GroceriesImage
+
+    deliverOrder = () => {
+        const {currentUser, id} = this.props
+        this.props.editOrder(currentUser.user._id, currentUser.user.role, id, { status: 'delivered' })
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
-    else if(itemType === 'shopping'){
-        orderImage = ShoppingImage
+
+    render() {
+        const { id, index, date, from, items, to, description, minPrice, maxPrice, estimatedPrice, estimatedDuration, estimatedDistance, status, currentUser } = this.props
+        const itemsList = items.map(item => (
+            <List.Item className='item'>{item.name}</List.Item>
+        ))
+        return(
+            <div className='OrderItem mb-2 ml-1'>
+                <div class="card">
+                    <div class="card-header bg-white">
+                        Order #{index+1}
+                    </div>
+                    <div class="card-body">
+                        <div className='row'>
+                            <div className='col-lg-6 col-sm-12'>
+                                <small className='text-muted'>
+                                    <Moment format='Do MMM YYYY - HH:mm'>{date}</Moment>
+                                </small><br />
+                                <small className='text-muted'>
+                                    Price: {minPrice} dhs - {maxPrice} dhs
+                                </small><br />
+                                <Icon name='map marker alternate' />
+                                <small className='text-muted'>{from}</small>
+                                <p class="card-text pt-3">{description}</p>
+                                <List bulleted>
+                                    {itemsList}
+                                </List>
+                            </div>
+                            <div className='col-lg-6 col-sm-12'>
+                                <div className='boxman-area row pt-2'>
+                                    <div className='col-2'>
+                                        <img src={UserImg} alt='user' height='40px' width='40px'></img>
+                                    </div>
+                                    <div className='col-8'>
+                                        <span className='pl-2'>Hamid Lmardi</span><br/>
+                                        <small className='text-muted pl-2'>+2126874565</small>
+                                    </div>
+                                    <div className='col-2'>
+                                        <Icon className='mr-4 pt-2' name='phone' />
+                                    </div>
+                                </div>
+                                {currentUser.user.role === 'customer' 
+                                    ? <p className='centerBtn mt-2'><button className='OrderItem-btn'>Track Order</button></p>
+                                    : <div>
+                                        <p className='centerBtn mt-3'>
+                                            {status !== 'picked' && <button className='OrderItem-btn' onClick={this.pickOrder}>Picked</button>}
+                                            {status === 'picked' && <button className='OrderItem-btn' onClick={this.deliverOrder}>Delivered</button>}
+                                        </p>
+                                      </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer bg-white">
+                        <div className='row'>
+                            <div className='estimationText col-6'>
+                                <div className='estimatedPriceText'>Estimated price</div>
+                                <div className='estimatedTimeText'>Estimated distance and duration</div>
+                            </div>
+                            <div className='col-6'>
+                                <div className='estimatedPriceValue alignRight'>{estimatedPrice} dhs</div>
+                                <div className='estimatedTimeValue alignRight'>{estimatedDistance}/{estimatedDuration}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
-    else if(itemType === 'courier'){
-        orderImage = CourierImage
-    }
-    else if(itemType === 'healthcare'){
-        orderImage = HealthImage
-    }
-    var deliveryIcon = deliveryType === 'Regular' ? <Icon name='wait'/> : <Icon name='shipping fast'/>
-    return(
-        <div className='OrderItem col-sm-6 col-md-4 col-lg-3'>
-            <Card>
-                <Image src={orderImage} wrapped ui={false} />
-                <Card.Content>
-                    {/* <Card.Header>Matthew</Card.Header> */}
-                    <Card.Meta>
-                        <Moment format='Do MMM YYYY - HH:mm'>{date}</Moment><br />
-                        {deliveryType} {deliveryIcon}
-                    </Card.Meta>
-                    <Card.Description>
-                        <strong>From: </strong>{from} <br />
-                        <strong>To: </strong>{to} <br />
-                        <strong>Description: </strong>{description}
-                    </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                    {orderStatus==='myOrders' && <button className='btn btn-outline-danger OrderItem-btn' onClick={cancelOrder}>Cancel</button>}
-                    {orderStatus==='pending' && <button className='btn btn-outline-success OrderItem-btn' onClick={editOrder}>Pick Order</button>}
-                    {orderStatus==='toDeliver' && <button className='btn btn-outline-success OrderItem-btn' onClick={removeOrder}>Delivered</button>}
-                    {orderStatus==='toDeliver' && <NavLink to={`/${id}/assistance`}><div className='btn btn-outline-warning OrderItem-btn'>Assistance</div></NavLink>}
-                </Card.Content>
-            </Card>
-        </div>
-    )
+    
 }
 
 

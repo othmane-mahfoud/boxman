@@ -3,18 +3,6 @@
     text-align: center;
 }
 
-/* .OrdersList-submit {
-    text-align: center;
-    margin: 0 auto;
-    background-color: #27B08A;
-    color: white;
-    border-radius: 30px;
-    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    width: 10rem;
-} */
-
 .OrdersList-submit {
     cursor: pointer;
     outline: none; 

@@ -9,11 +9,11 @@ export function edit(user) {
     };
 }
 
-export function editUser(userId, userData) {
+export function editProfile(userId, role, userData) {
     return dispatch => {
     // wrap our thunk in a promise so we can wait for the API call
         return new Promise((resolve, reject) => {
-            return apiCall("put", `/api/users/${userId}/edit`, userData)
+            return apiCall("put", `/api/${role}/${userId}/profile`, userData)
             .then(user => {
                 dispatch(edit(user));
                 dispatch(removeError());

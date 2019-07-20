@@ -2,129 +2,83 @@ import React, { Component } from 'react'
 import '../styles/OrdersList.css'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { fetchOrders, removeOrder, editOrder } from '../store/actions/orders'
+import { fetchOrders, editOrder } from '../store/actions/orders'
 import { Header, Icon } from 'semantic-ui-react'
 import OrderItem from '../components/OrderItem'
 
 
 class OrdersList extends Component {
     componentDidMount() {
-        this.props.fetchOrders()
+        this.props.fetchOrders(this.props.currentUser.user._id, this.props.currentUser.user.role)
     }
+
     render() {
-        const { currentUser, orders, removeOrder, editOrder } = this.props
-        var filteredOrders
-        var ordersList
-        if(this.props.myOrders){
-            filteredOrders = orders.filter(order => (order.customer === currentUser.user._id))
-            ordersList = filteredOrders.map(order => (
-                <OrderItem 
-                    key={order._id}
-                    id={order._id}
-                    date={order.createdAt}
-                    itemType={order.itemType}
-                    deliveryType={order.deliveryType}
-                    price={order.price}
-                    customer={order.customer}
-                    from={order.from}
-                    to={order.to}
-                    description={order.description}
-                    cancelOrder={removeOrder.bind(this, currentUser.user._id, order._id)}
-                    isCorrectCustomer={currentUser.user._id === order.customer}
-                    // removeOrder={removeOrder.bind(this, order.boxman._id, order._id)}
-                    // isCorrectBoxman={currentUser.user.id === order.boxman._id}
-                    editOrder={editOrder.bind(this, currentUser.user._id, order._id)}
-                    orderStatus='myOrders'
-                />
-            ))
-            if(ordersList.length === 0) {
-                ordersList.push(
-                    <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
-                        <div className="container">
-                            <Header icon>
-                                <Icon name='shopping bag' />
-                                Looks like you have no orders yet, need anything?<br/>
-                                Start ordering with BoxMan
-                            </Header><br/>
-                            <NavLink to={`/users/${currentUser.user._id}/orders/new`} className='OrdersList-submit outline green-white'>Start Ordering</NavLink>
-                        </div>
+        const { currentUser, orders, editOrder } = this.props
+        var filteredOrders = orders.filter(order => order.status !== 'delivered')
+        var ordersList = filteredOrders.map((order, index) => (
+            <OrderItem 
+                key={order._id}
+                id={order._id}
+                index={index}
+                date={order.createdAt}
+                minPrice={order.minPrice}
+                maxPrice={order.maxPrice}
+                from={order.from}
+                to={order.to}
+                description={order.description}
+                items={order.items}
+                status={order.status}
+                estimatedPrice={order.estimatedPrice}
+                estimatedDuration={order.estimatedDuration}
+                estimatedDistance={order.estimatedDistance}
+                currentUser={currentUser}
+                editOrder={editOrder}
+            />
+        ))
+        if(currentUser.user.role === 'customer') {
+            var placeHolderText = (
+                <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
+                    <div className="container">
+                        <Header icon>
+                            <Icon name='shopping basket' />
+                            Looks like you have no orders yet, need anything?<br/>
+                            Start ordering with BoxMan
+                        </Header><br/>
+                        <NavLink to={`/users/${currentUser.user._id}/orders/new`}><button className='Navbar-register btn mr-2'>Start Ordering</button></NavLink>
                     </div>
-                )
-            }
-        }
-        else if(this.props.pending) {
-            filteredOrders = orders.filter(order => (order['boxman'] === undefined) && (order.customer !== currentUser.user._id))
-            ordersList = filteredOrders.map(order => (
-                <OrderItem 
-                    key={order._id}
-                    id={order._id}
-                    date={order.createdAt}
-                    itemType={order.itemType}
-                    deliveryType={order.deliveryType}
-                    price={order.price}
-                    customer={order.customer}
-                    from={order.from}
-                    to={order.to}
-                    description={order.description}
-                    cancelOrder={removeOrder.bind(this, order.customer, order._id)}
-                    // isCorrectCustomer={currentUser.user.id === order.customer}
-                    removeOrder={removeOrder.bind(this, order.boxman, order._id)}
-                    // isCorrectBoxman={currentUser.user.id === order.boxman._id}
-                    editOrder={editOrder.bind(this, currentUser.user._id, order._id)}
-                    orderStatus='pending'
-                />
-            ))
-            if(ordersList.length === 0) {
-                ordersList.push(
-                    <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
-                        <div className="container">
-                            <Header icon>
-                                <Icon name='wait' />
-                                Mmmm, looks like no one needs anything. Come check again later!
-                            </Header>
-                        </div>
-                    </div>
-                )
-            }
+                </div>
+            )
         }
         else {
-            filteredOrders = orders.filter(order => ((order['boxman'] !== undefined) && (order.boxman === currentUser.user._id)))
-            ordersList = filteredOrders.map(order => (
-                <OrderItem 
-                    key={order._id}
-                    id={order._id}
-                    date={order.createdAt}
-                    itemType={order.itemType}
-                    deliveryType={order.deliveryType}
-                    price={order.price}
-                    customer={order.customer}
-                    from={order.from}
-                    to={order.to}
-                    description={order.description}
-                    cancelOrder={removeOrder.bind(this, order.customer, order._id)}
-                    isCorrectCustomer={currentUser.user._id === order.customer}
-                    removeOrder={removeOrder.bind(this, order.boxman, order._id)}
-                    // isCorrectBoxman={currentUser.user.id === order.boxman._id}
-                    editOrder={editOrder.bind(this, currentUser.user._id, order._id)}
-                    orderStatus='toDeliver'
-                />
-            ))
-            if(ordersList.length === 0) {
-                ordersList.push(
-                    <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
-                        <div className="container">
-                            <Header icon>
-                                <Icon name='shopping cart' />
-                                You're good to go, nothing to deliver for now
-                            </Header>
-                        </div>
+            var placeHolderText = (
+                <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
+                    <div className="container">
+                        <Header icon>
+                            <Icon name='shopping basket' />
+                            You have nothing to deliver<br/>
+                            You can have some rest and enjoy your day
+                        </Header><br/>
                     </div>
-                )
-            }
+                </div>
+            )
         }
         return (
-            <div className='mt-3 mb-4 row'>
-                {ordersList}
+            <div className='row'>
+                <div className='col-lg-9 col-sm-12'>
+                    {ordersList.length === 0 ? placeHolderText : ordersList}
+                </div>
+                {currentUser.user.role === 'customer' && 
+                    <div className='col-lg-3 col-sm-12 mt-0'>
+                        <NavLink to={`/users/${currentUser.user._id}/orders/new`}>
+                            <div className='btn Profile-request'>
+                                <div className='Profile-request-content pl-2 pt-5'>
+                                    <div><Icon name='pencil'/></div>
+                                    <div className='Profile-request-text'>Request Order <Icon name='arrow right'/></div>
+                                </div>
+                            </div>
+                        </NavLink>
+                    </div>
+                }
             </div>
         )
     }
@@ -137,4 +91,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {fetchOrders, removeOrder, editOrder})(OrdersList) 
+export default connect(mapStateToProps, {fetchOrders, editOrder})(OrdersList) 

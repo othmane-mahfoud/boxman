@@ -1,22 +1,28 @@
 import React from 'react'
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Homepage from '../components/Homepage'
+import LandingPage from '../components/LandingPage'
 import Profile from '../components/Profile'
 import Map from '../components/Map'
 import OrderAssistance from '../components/OrderAssistance'
 import OrderForm from './OrderForm'
 import { authUser } from '../store/actions/auth'
 import { removeError } from '../store/actions/errors'
-import { editUser } from '../store/actions/users'
+import { editProfile } from '../store/actions/users'
 import withAuth from '../hocs/withAuth'
 
 const Main = props => {
-    const { editUser, currentUser } = props
+    const { currentUser, editProfile } = props
     return (
         <Switch>
-            <Route exact path='/' render={(props) => <Homepage currentUser={currentUser} {...props}/>}/>
-            <Route exact path='/profile' render={(props) => <Profile editUser={editUser} currentUser={currentUser} {...props}/>}/>
+            <Route exact path='/' render={(props) => 
+                <LandingPage 
+                    currentUser={currentUser} 
+                    editProfile={editProfile} 
+                    {...props}
+                />}
+            />
+            <Route exact path='/profile' render={(props) => <Profile currentUser={currentUser} {...props}/>}/>
             {/* <Route exact path='/orders' render={(props) => <OrdersTimeline currentUser={currentUser} {...props}/>}/> */}
             <Route exact path='/users/:id/orders/new' component={withAuth(OrderForm)} />
             <Route exact path='/map' component={Map} />
@@ -32,4 +38,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, {authUser, removeError, editUser})(Main))
+export default withRouter(connect(mapStateToProps, {authUser, removeError, editProfile})(Main))

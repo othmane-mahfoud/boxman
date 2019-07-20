@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import Navbar from './Navbar'
 import '../styles/OrderForm.css'
 import { Message, Form, List, Input, TextArea, Icon } from 'semantic-ui-react'
 import { addOrder } from '../store/actions/orders'
+import { addError, removeError } from '../store/actions/errors'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -17,7 +19,10 @@ class OrderForm extends Component {
             items: [],
             minPrice: '',
             maxPrice: '',
+            estimatedDistance: '',
+            estimatedDuration: '',
             estimatedPrice: 0,
+            isEstimated: false,
             success: false
         }
     }
@@ -31,32 +36,72 @@ class OrderForm extends Component {
     handleNewOrder = event => {
         event.preventDefault()
         const { from, to, description, items, minPrice, maxPrice } = this.state 
-        const order = {
-            from,
-            to,
-            description,
-            items,
-            minPrice,
-            maxPrice
-        }
-        this.props.addOrder(order)
-        .then(() => {
-            this.setState({ success: true })
-            this.props.history.push('/')
-        })
-        .catch(err => {
+        this.estimateValues(from, to, minPrice)
+        // const order = {
+        //     from,
+        //     to,
+        //     description,
+        //     items,
+        //     minPrice,
+        //     maxPrice
+        // }
+        // this.props.addOrder(order)
+        // .then(() => {
+        //     this.setState({ success: true })
+        //     this.props.history.push('/')
+        // })
+        // .catch(err => {
+        //     this.setState({
+        //         from: '',
+        //         to: '',
+        //         description: '',
+        //         newItem:'',
+        //         items: [],
+        //         minPrice: '',
+        //         maxPrice: '',
+        //         estimatedPrice: 0,
+        //         success: false
+        //     })
+        // })
+    }
+
+    estimateValues = (from, to, minPrice) => {
+        var directionsService = new window.google.maps.DirectionsService();
+        var request = {
+            origin: from,
+            destination: to,
+            travelMode: 'DRIVING'
+        };
+        directionsService.route(request, (result, status) => {
+            if (status === 'OK') {
+                this.calculateEstimations(from, to, minPrice)
+            }
+            else {
+                this.props.addError('invalid location')
+            }
+        });
+    }
+
+    calculateEstimations(from, to, minPrice) {
+        var service = new window.google.maps.DistanceMatrixService();
+        service.getDistanceMatrix(
+        {
+            origins: [from],
+            destinations: [to],
+            travelMode: 'DRIVING',
+        }, (response, status) => {
+            var estimations = {
+                distance : response.rows[0].elements[0].distance.text,
+                duration : response.rows[0].elements[0].duration.text,
+                price : Math.floor(10 + parseInt(minPrice) + (response.rows[0].elements[0].distance.value * 0.001))
+            }
             this.setState({
-                from: '',
-                to: '',
-                description: '',
-                newItem:'',
-                items: [],
-                minPrice: '',
-                maxPrice: '',
-                estimatedPrice: 0,
-                success: false
+                isEstimated: true,
+                estimatedPrice: estimations.price,
+                estimatedDuration: estimations.duration,
+                estimatedDistance: estimations.distance
             })
-        })
+        });
     }
 
     addItem = (e) => {
@@ -79,7 +124,7 @@ class OrderForm extends Component {
     }
 
     render() {
-        const { from, to, description, newItem, items, minPrice, maxPrice, estimatedPrice } = this.state
+        const { from, to, description, newItem, items, minPrice, maxPrice, estimatedPrice, estimatedDistance, estimatedDuration, isEstimated } = this.state
         const itemsList = items.map((item, index) => (
             <List.Item key={index} id={index} className='Item p-3 mb-1'>
                 <List.Content floated='right'>
@@ -164,9 +209,9 @@ class OrderForm extends Component {
                                         />
                                     </Form.Field>
                                 </Form.Group>
-                                <div className='OrderForm-center'>
-                                    <button className='OrderForm-submit btn' type='submit'>Order Now</button>
-                                </div>
+                                {isEstimated === false && (<div className='OrderForm-center'>
+                                    <button className='OrderForm-submit btn' type='submit'>Confirm</button>
+                                </div>)}
                             </Form>
                         </div>
                         <div className='col-lg-6 col-sm-12'>
@@ -195,16 +240,23 @@ class OrderForm extends Component {
                                     />
                                 </Form.Field>
                             </Form>
-                            <div className='estimations row mt-3 p-2'>
-                                <div className='estimationText col-6'>
-                                    <div className='estimatedPriceText pl-3'>Estimated price</div>
-                                    <div className='estimatedTimeText pl-3'>Estimated time and distance</div>
+                            {isEstimated === true && (
+                                <div>
+                                    <div className='estimations row mt-3 p-2'>
+                                        <div className='estimationText col-6'>
+                                            <div className='estimatedPriceText pl-3'>Estimated price</div>
+                                            <div className='estimatedTimeText pl-3'>Estimated time and distance</div>
+                                        </div>
+                                        <div className='col-6'>
+                                            <div className='estimatedPriceValue alignRight pr-3'>{estimatedPrice} DHS</div>
+                                            <div className='estimatedTimeValue alignRight pr-3'>{estimatedDistance}/{estimatedDuration}</div>
+                                        </div>
+                                    </div>
+                                    <div className='OrderForm-center mt-3'>
+                                        <button className='OrderForm-submit btn' type='submit'>Order Now</button>
+                                    </div>
                                 </div>
-                                <div className='col-6'>
-                                    <div className='estimatedPriceValue alignRight pr-3'>{estimatedPrice}</div>
-                                    <div className='estimatedTimeValue alignRight pr-3'>25min</div>
-                                </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -220,4 +272,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, {addOrder})(OrderForm))
+export default withRouter(connect(mapStateToProps, {addOrder, addError, removeError})(OrderForm))

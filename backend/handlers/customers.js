@@ -2,7 +2,7 @@ const db = require("../models");
 
 // ORDERS
 
-// GET - /api/customers/:id/orders/
+// GET - /api/customer/:id/orders/
 exports.fetchOrders = async function(req, res, next) {
     try {
         let orders = await db.Order.find({customer: req.params.id}).sort({ createdAt: 'desc' })
@@ -12,7 +12,7 @@ exports.fetchOrders = async function(req, res, next) {
     }
 }
 
-// POST - /api/customers/:id/orders/
+// POST - /api/customer/:id/orders/
 exports.createOrder = async function(req, res, next) {
     try {
         let order = await db.Order.create({
@@ -30,7 +30,7 @@ exports.createOrder = async function(req, res, next) {
     }
 }
 
-// GET - /api/customers/:id/orders/:order_id
+// GET - /api/customer/:id/orders/:order_id
 exports.getOrder = async function(req, res, next) {
     try {
         let order = await db.Order.findById(req.params.order_id)
@@ -41,7 +41,7 @@ exports.getOrder = async function(req, res, next) {
     }
 }
 
-// PUT - /api/users/:id/orders/:order_id
+// PUT - /api/customer/:id/orders/:order_id
 exports.editOrder = async function(req, res, next) {
     try {
         let order = await db.Order.findOneAndUpdate({ _id: req.params.order_id }, req.body, {new: true})
@@ -52,7 +52,7 @@ exports.editOrder = async function(req, res, next) {
     }
 }
 
-// DELETE /api/users/:id/orders/:order_id
+// DELETE /api/customer/:id/orders/:order_id
 exports.deleteOrder = async function(req, res, next) {
     try {
         let foundOrder = await db.Order.findById(req.params.order_id)
@@ -65,7 +65,7 @@ exports.deleteOrder = async function(req, res, next) {
 
 // PROFILE
 
-// GET - /api/customers/:id/profile
+// GET - /api/customer/:id/profile
 exports.getProfile = async function(req, res, next) {
     try {
         let customer = await db.Customer.findById(req.params.id)
@@ -78,7 +78,7 @@ exports.getProfile = async function(req, res, next) {
     }
 }
 
-// PUT - /api/customers/:id/profile
+// PUT - /api/customer/:id/profile
 exports.editProfile = async function(req, res, next) {
     try {
         let customer = await db.Customer.findOneAndUpdate({ _id: req.params.id }, req.body, {new: true})

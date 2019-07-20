@@ -2,7 +2,7 @@ const db = require('../models')
 
 // ORDERS
 
-// GET - /api/boxmen/:id/orders/
+// GET - /api/boxman/:id/orders/
 exports.fetchOrders = async function(req, res, next) {
     try {
         let orders = await db.Order.find({boxman: req.params.id}).sort({ createdAt: 'desc' })
@@ -12,7 +12,7 @@ exports.fetchOrders = async function(req, res, next) {
     }
 }
 
-// GET - /api/boxmen/:id/orders/:order_id
+// GET - /api/boxman/:id/orders/:order_id
 exports.getOrder = async function(req, res, next) {
     try {
         let order = await db.Order.findById(req.params.order_id)
@@ -23,10 +23,10 @@ exports.getOrder = async function(req, res, next) {
     }
 }
 
-// PUT - /api/boxmen/:id/orders/:order_id
-exports.acceptOrder = async function(req, res, next) {
+// PUT - /api/boxman/:id/orders/:order_id
+exports.editOrder = async function(req, res, next) {
     try {
-        let order = await db.Order.findOneAndUpdate({ _id: req.params.order_id }, {boxman: req.params.id, status:"assigned"}, {new: true})
+        let order = await db.Order.findOneAndUpdate({ _id: req.params.order_id }, req.body, {new: true})
         await order.save()
         res.status(200).json(order)
     } catch(err) {
@@ -36,7 +36,7 @@ exports.acceptOrder = async function(req, res, next) {
 
 // PROFILE
 
-// GET - api/boxmen/:id/profile
+// GET - api/boxman/:id/profile
 exports.getProfile = async function(req, res, next) {
     try {
         let boxman = await db.Boxman.findById(req.params.id)
@@ -49,7 +49,7 @@ exports.getProfile = async function(req, res, next) {
     }
 }
 
-// PUT - api/boxmen/:id/profile
+// PUT - api/boxman/:id/profile
 exports.editProfile = async function(req, res, next) {
     try {
         let boxman = await db.Boxman.findOneAndUpdate({ _id: req.params.id }, req.body, {new: true})

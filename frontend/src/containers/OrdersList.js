@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import '../styles/OrdersList.css'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { fetchOrders, removeOrder, editOrder } from '../store/actions/orders'
+import { fetchOrders, editOrder } from '../store/actions/orders'
 import { Header, Icon } from 'semantic-ui-react'
 import OrderItem from '../components/OrderItem'
 
@@ -11,12 +11,15 @@ class OrdersList extends Component {
     componentDidMount() {
         this.props.fetchOrders(this.props.currentUser.user._id, this.props.currentUser.user.role)
     }
+
     render() {
-        const { currentUser, orders } = this.props
-        var ordersList = orders.map(order => (
+        const { currentUser, orders, editOrder } = this.props
+        var filteredOrders = orders.filter(order => order.status !== 'delivered')
+        var ordersList = filteredOrders.map((order, index) => (
             <OrderItem 
                 key={order._id}
                 id={order._id}
+                index={index}
                 date={order.createdAt}
                 minPrice={order.minPrice}
                 maxPrice={order.maxPrice}
@@ -24,62 +27,42 @@ class OrdersList extends Component {
                 to={order.to}
                 description={order.description}
                 items={order.items}
+                status={order.status}
                 currentUser={currentUser}
+                editOrder={editOrder}
             />
         ))
-        var customerOrdersPlaceHolder = (
-            <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
-                <div className="container">
-                    <Header icon>
-                        <Icon name='shopping basket' />
-                        Looks like you have no orders yet, need anything?<br/>
-                        Start ordering with BoxMan
-                    </Header><br/>
-                    <NavLink to={`/users/${currentUser.user._id}/orders/new`}><button className='Navbar-register btn mr-2'>Start Ordering</button></NavLink>
+        if(currentUser.user.role === 'customer') {
+            var placeHolderText = (
+                <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
+                    <div className="container">
+                        <Header icon>
+                            <Icon name='shopping basket' />
+                            Looks like you have no orders yet, need anything?<br/>
+                            Start ordering with BoxMan
+                        </Header><br/>
+                        <NavLink to={`/users/${currentUser.user._id}/orders/new`}><button className='Navbar-register btn mr-2'>Start Ordering</button></NavLink>
+                    </div>
                 </div>
-            </div>
-        )
-        var boxmanOrdersPlaceHolder = (
-            <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
-                <div className="container">
-                    <Header icon>
-                        <Icon name='shopping basket' />
-                        You have nothing to deliver<br/>
-                        You can have some rest and enjoy your day
-                    </Header><br/>
+            )
+        }
+        else {
+            var placeHolderText = (
+                <div key='none' className="jumbotron jumbotron-fluid OrdersList-segment bg-white" >
+                    <div className="container">
+                        <Header icon>
+                            <Icon name='shopping basket' />
+                            You have nothing to deliver<br/>
+                            You can have some rest and enjoy your day
+                        </Header><br/>
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        }
         return (
             <div className='row'>
                 <div className='col-lg-9 col-sm-12'>
-                    {(ordersList.length === 0) && (currentUser.user.role === 'customer') ? customerOrdersPlaceHolder : ordersList}
-                    {(ordersList.length === 0) && (currentUser.user.role === 'boxman') ? boxmanOrdersPlaceHolder : ordersList}
-                    {/* <OrderItem 
-                        from='3416 Tenmile Road, Waltham, Massachusetts, 3 floor'
-                        to='Test Address'
-                        description='This is just a fake order to design the order card'
-                        minPrice={100}
-                        maxPrice={200}
-                        estimatedPrice={120}
-                        items={[
-                            {name: 'banana', picked:false}, {name: 'bread', picked: false}
-                        ]}
-                        status='assigned'
-                    />
-                    <OrderItem 
-                        from='3416 Tenmile Road, Waltham, Massachusetts, 3 floor'
-                        to='Test Address'
-                        description='This is just a fake order to design the order card'
-                        minPrice={100}
-                        maxPrice={200}
-                        estimatedPrice={120}
-                        items={[
-                            {name: 'banana', picked:false}, {name: 'bread', picked: false}
-                        ]}
-                        status='assigned'
-                    /> */}
-                    {/* {ordersList} */}
+                    {ordersList.length === 0 ? placeHolderText : ordersList}
                 </div>
                 {currentUser.user.role === 'customer' && 
                     <div className='col-lg-3 col-sm-12 mt-0'>
@@ -105,4 +88,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {fetchOrders})(OrdersList) 
+export default connect(mapStateToProps, {fetchOrders, editOrder})(OrdersList) 

@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+import Switch from "react-switch";
+import { NavLink } from 'react-router-dom'
 import '../styles/Navbar.css'
 import { Container, Icon, Menu, Modal, Tab } from 'semantic-ui-react'
 import Authform from '../components/Authform'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { authUser, logout } from '../store/actions/auth'
+import { editProfile } from '../store/actions/users'
 import { removeError } from '../store/actions/errors'
 import UserImg from '../images/user.png'
 
@@ -13,14 +17,39 @@ class Navbar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            selection: ""
+            active: true
         }
     }
+
+    componentWillMount() {
+        if(this.props.currentUser.user.role === 'boxman'){
+            axios.get(`/api/boxman/${this.props.currentUser.user._id}/profile`)
+            .then(res => {
+                this.setState({
+                    active: res.data.active
+                })
+            })
+        }
+    }
+
+    handleSwitch = () => {
+        this.props.editProfile(this.props.currentUser.user._id, this.props.currentUser.user.role, {active: !this.state.active})
+        .then(res => {
+            this.setState((prevState) => ({
+                active: !prevState.active
+            }))
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     logout = e => {
         e.preventDefault()
         this.props.logout()
         this.props.history.push('/')
     }
+
     render() {
         const registerPanes = [
             {
@@ -123,8 +152,18 @@ class Navbar extends Component {
                 <div className='Navbar-logged pt-4'>
                     <Container>
                         <Menu secondary>
-                            <div className='Navbar-brand-logged'>Boxman <i className="Navbar-brand-logo-logged fa fa-shopping-bag" /></div>
+                            <NavLink className='brand-link' to='/'><div className='Navbar-brand-logged'>Boxman <i className="Navbar-brand-logo-logged fa fa-shopping-bag" /></div></NavLink>
                             <Menu.Menu position='right' className='pt-2'>
+                                {currentUser.user.role === 'boxman' && 
+                                    <Menu.Item>
+                                        <span className='active-boxman-label'>Active</span>
+                                    </Menu.Item>
+                                }
+                                {currentUser.user.role === 'boxman' && 
+                                    <Menu.Item>
+                                        <Switch onChange={this.handleSwitch} checked={this.state.active} />
+                                    </Menu.Item>
+                                }
                                 <Menu.Item>
                                     <Icon className='Navbar-notification-logged' name='bell' />
                                 </Menu.Item>
@@ -151,4 +190,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, {authUser, removeError, logout})(Navbar))
+export default withRouter(connect(mapStateToProps, {authUser, removeError, logout, editProfile})(Navbar))

@@ -1,9 +1,9 @@
 var express = require('express')
 var router  = express.Router({ mergeParams: true })
 
-var { getProfile, editProfile, acceptOrder, fetchOrders, getOrder } = require('../handlers/boxmen')
+var { getProfile, editProfile, editOrder, fetchOrders, getOrder } = require('../handlers/boxmen')
 
-// prefix: /api/boxmen/:id
+// prefix: /api/boxman/:id
 
 router
     .route('/profile')
@@ -17,6 +17,6 @@ router
 router
     .route('/orders/:order_id')
     .get(getOrder)
-    .put(acceptOrder)
+    .put(editOrder)
 
 module.exports = router

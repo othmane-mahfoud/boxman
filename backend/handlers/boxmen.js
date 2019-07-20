@@ -12,6 +12,16 @@ exports.fetchOrders = async function(req, res, next) {
     }
 }
 
+// GET - /api/boxman/:id/orders/unassigned
+exports.fetchUnassignedOrders = async function(req, res, next) {
+    try {
+        let orders = await db.Order.find({status: 'none'}).sort({ createdAt: 'desc' })
+        return res.status(200).json(orders)
+    } catch(err) {
+        return(next(err))
+    }
+}
+
 // GET - /api/boxman/:id/orders/:order_id
 exports.getOrder = async function(req, res, next) {
     try {

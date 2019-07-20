@@ -33,36 +33,48 @@ class OrderForm extends Component {
         })
     }
     
-    handleNewOrder = event => {
+    handleEstimation = (event) => {
         event.preventDefault()
         const { from, to, description, items, minPrice, maxPrice } = this.state 
         this.estimateValues(from, to, minPrice)
-        // const order = {
-        //     from,
-        //     to,
-        //     description,
-        //     items,
-        //     minPrice,
-        //     maxPrice
-        // }
-        // this.props.addOrder(order)
-        // .then(() => {
-        //     this.setState({ success: true })
-        //     this.props.history.push('/')
-        // })
-        // .catch(err => {
-        //     this.setState({
-        //         from: '',
-        //         to: '',
-        //         description: '',
-        //         newItem:'',
-        //         items: [],
-        //         minPrice: '',
-        //         maxPrice: '',
-        //         estimatedPrice: 0,
-        //         success: false
-        //     })
-        // })
+    }
+
+    handleNewOrder = (event) => {
+        event.preventDefault()
+        const { from, to, description, items, minPrice, maxPrice, estimatedDistance, estimatedDuration, estimatedPrice } = this.state 
+        const order = {
+            from,
+            to,
+            description,
+            items,
+            minPrice,
+            maxPrice,
+            estimatedDistance,
+            estimatedDuration,
+            estimatedPrice
+        }
+        this.props.addOrder(order)
+        .then(() => {
+            this.setState({ success: true })
+            this.props.history.push('/')
+        })
+        .catch(err => {
+            this.props.addError(err.message)
+            this.setState({
+                from: '',
+                to: '',
+                description: '',
+                newItem:'',
+                items: [],
+                minPrice: '',
+                maxPrice: '',
+                estimatedPrice: 0,
+                estimatedDistance: '',
+                estimatedDuration: '',
+                isEstimated: false,
+                success: false
+            })
+        })
     }
 
     estimateValues = (from, to, minPrice) => {
@@ -82,7 +94,7 @@ class OrderForm extends Component {
         });
     }
 
-    calculateEstimations(from, to, minPrice) {
+    calculateEstimations = (from, to, minPrice) => {
         var service = new window.google.maps.DistanceMatrixService();
         service.getDistanceMatrix(
         {
@@ -152,7 +164,7 @@ class OrderForm extends Component {
                     </div>
                     <div className='OrderForm-form row'>
                         <div className='col-lg-6 col-sm-12'>
-                            <Form onSubmit={this.handleNewOrder}>
+                            <Form onSubmit={this.handleEstimation}>
                                 <Form.Field>
                                     <label>Description</label>
                                     <TextArea
@@ -210,7 +222,7 @@ class OrderForm extends Component {
                                     </Form.Field>
                                 </Form.Group>
                                 {isEstimated === false && (<div className='OrderForm-center'>
-                                    <button className='OrderForm-submit btn' type='submit'>Confirm</button>
+                                    <button className='OrderForm-submit btn' type='submit'>Place Order</button>
                                 </div>)}
                             </Form>
                         </div>
@@ -253,7 +265,7 @@ class OrderForm extends Component {
                                         </div>
                                     </div>
                                     <div className='OrderForm-center mt-3'>
-                                        <button className='OrderForm-submit btn' type='submit'>Order Now</button>
+                                        <button className='OrderForm-submit btn' onClick={this.handleNewOrder}>Confirm Order</button>
                                     </div>
                                 </div>
                             )}

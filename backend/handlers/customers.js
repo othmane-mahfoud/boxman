@@ -23,6 +23,9 @@ exports.createOrder = async function(req, res, next) {
             maxPrice: req.body.maxPrice,
             items: req.body.items,
             customer: req.params.id,
+            estimatedDuration: req.body.estimatedDuration,
+            estimatedPrice: req.body.estimatedPrice,
+            estimatedDistance: req.body.estimatedDistance
         })
         return res.status(200).json(order)
     } catch(err) {

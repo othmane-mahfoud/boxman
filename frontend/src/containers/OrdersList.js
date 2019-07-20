@@ -28,6 +28,9 @@ class OrdersList extends Component {
                 description={order.description}
                 items={order.items}
                 status={order.status}
+                estimatedPrice={order.estimatedPrice}
+                estimatedDuration={order.estimatedDuration}
+                estimatedDistance={order.estimatedDistance}
                 currentUser={currentUser}
                 editOrder={editOrder}
             />

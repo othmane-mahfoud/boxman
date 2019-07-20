@@ -38,6 +38,12 @@ const orderSchema = new mongoose.Schema(
         estimatedPrice: {
             type: Number
         },
+        estimatedDistance: {
+            type: String
+        },
+        estimatedDuration: {
+            type: String
+        },
         customer: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Customer"

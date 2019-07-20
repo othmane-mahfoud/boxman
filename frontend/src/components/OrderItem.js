@@ -35,7 +35,7 @@ class OrderItem extends Component {
     }
 
     render() {
-        const { id, index, date, from, items, to, description, minPrice, maxPrice, estimatedPrice, status, currentUser } = this.props
+        const { id, index, date, from, items, to, description, minPrice, maxPrice, estimatedPrice, estimatedDuration, estimatedDistance, status, currentUser } = this.props
         const itemsList = items.map(item => (
             <List.Item className='item'>{item.name}</List.Item>
         ))
@@ -83,7 +83,6 @@ class OrderItem extends Component {
                                         </p>
                                       </div>
                                 }
-
                             </div>
                         </div>
 
@@ -92,11 +91,11 @@ class OrderItem extends Component {
                         <div className='row'>
                             <div className='estimationText col-6'>
                                 <div className='estimatedPriceText'>Estimated price</div>
-                                <div className='estimatedTimeText'>Estimated time and distance</div>
+                                <div className='estimatedTimeText'>Estimated distance and duration</div>
                             </div>
                             <div className='col-6'>
-                                <div className='estimatedPriceValue alignRight'>120</div>
-                                <div className='estimatedTimeValue alignRight'>25min</div>
+                                <div className='estimatedPriceValue alignRight'>{estimatedPrice} dhs</div>
+                                <div className='estimatedTimeValue alignRight'>{estimatedDistance}/{estimatedDuration}</div>
                             </div>
                         </div>
                     </div>

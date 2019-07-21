@@ -1,34 +1,63 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Switch from "react-switch";
+import jwtDecode from 'jwt-decode'
+import { socket } from '../services/socket'
+import { getLocation } from '../services/location'
 import { NavLink } from 'react-router-dom'
 import '../styles/Navbar.css'
-import { Container, Icon, Menu, Modal, Tab } from 'semantic-ui-react'
+import { Container, Dropdown, Label, Icon, Menu, Modal, Tab } from 'semantic-ui-react'
 import Authform from '../components/Authform'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { authUser, logout } from '../store/actions/auth'
 import { editProfile } from '../store/actions/users'
+import { loadOrders, fetchOrders, editOrder } from '../store/actions/orders'
+import { fetchNotifications } from '../store/actions/notifications'
 import { removeError } from '../store/actions/errors'
 import UserImg from '../images/user.png'
 
+var interval
+var interval2
 
 class Navbar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            active: true
+            active: true,
+            name: 'navbar', 
+            notifications: []
         }
     }
 
     componentWillMount() {
         if(this.props.currentUser.user.role === 'boxman'){
+            if(localStorage.jwtToken) {
+                interval = setInterval(async () => {
+                    socket.emit("updateBoxmanLocation", {
+                        id: jwtDecode(localStorage.jwtToken)._id,
+                        location: await getLocation()
+                    });
+                }, 5000);
+            }
+        }
+        if(this.props.currentUser.user.role === 'boxman'){
             axios.get(`/api/boxman/${this.props.currentUser.user._id}/profile`)
             .then(res => {
                 this.setState({
-                    active: res.data.active
+                    active: res.data.active,
                 })
             })
+        }
+        if(this.props.currentUser.user.role === 'boxman'){
+            interval2 = setInterval(() => {
+                this.props.fetchNotifications(this.props.currentUser.user._id, this.props.currentUser.user.role)
+                .then(() => {
+                    this.setState({
+                        notifications: this.props.notifications
+                    })
+                })
+            }, 5000)
         }
     }
 
@@ -44,8 +73,22 @@ class Navbar extends Component {
         })
     }
 
+    acceptOrder = (user_id, role, order_id) => {
+        this.props.editOrder(user_id, role, order_id, { boxman: this.props.currentUser.user._id, status: 'assigned' })
+        .then(res => {
+            // this.props.history.push('/')
+            // console.log(res)
+            this.props.fetchOrders(user_id, role)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     logout = e => {
         e.preventDefault()
+        clearInterval(interval)
+        clearInterval(interval2)
         this.props.logout()
         this.props.history.push('/')
     }
@@ -123,7 +166,18 @@ class Navbar extends Component {
                 )
             },
         ]
-        const { authUser, errors, removeError, currentUser } = this.props
+        const { authUser, errors, removeError, currentUser, notifications } = this.props
+        const options = notifications.map((n,i) => (
+            <div className='notification row p-2' key={i}>
+                <div className='col-sm-9'>
+                    <span className='mb-1 mt-2 pl-2'><strong>from: </strong>{n.from}</span><br/>
+                    <span className='pl-2'><strong>to: </strong>{n.to}</span>
+                </div> 
+                <div className='col-sm-3'>
+                    <button className='btn notification-btn' onClick={this.acceptOrder.bind(this,currentUser.user._id, currentUser.user.role, n._id)}>Accept</button>
+                </div> 
+            </div>
+        ))
         if(!currentUser.isAuthenticated){
             return(
                 <div className='Navbar container pt-4'>
@@ -164,9 +218,27 @@ class Navbar extends Component {
                                         <Switch onChange={this.handleSwitch} checked={this.state.active} />
                                     </Menu.Item>
                                 }
-                                <Menu.Item>
-                                    <Icon className='Navbar-notification-logged' name='bell' />
-                                </Menu.Item>
+                                {this.state.notifications.length === 0
+                                    ?
+                                    <Menu.Item>
+                                        <Icon className='Navbar-no-notification-logged' name='bell outline' />
+                                    </Menu.Item>
+                                    :
+                                    <Menu.Item>
+                                        <Dropdown
+                                            trigger={
+                                                <Icon className='Navbar-notification-logged' name='bell' />
+                                            } 
+                                            options={options} 
+                                            pointing='top left' 
+                                            icon={null} 
+                                        />
+                                        <Label circular color='green' floating>
+                                            { notifications.length }
+                                        </Label>
+                                    </Menu.Item>
+                                }
+                                
                                 <Menu.Item>
                                     <img className='Navbar-avatar-logged' src={UserImg} alt='user' height='35px' width='30px'/>
                                     <span className='Navbar-username-logged pl-2'> {currentUser.user.name}</span>
@@ -186,8 +258,10 @@ class Navbar extends Component {
 function mapStateToProps(state) {
     return {
         currentUser: state.currentUser,
-        errors: state.errors
+        errors: state.errors,
+        orders: state.orders,
+        notifications: state.notifications
     }
 }
 
-export default withRouter(connect(mapStateToProps, {authUser, removeError, logout, editProfile})(Navbar))
+export default withRouter(connect(mapStateToProps, {authUser, removeError, logout, editProfile, loadOrders, fetchOrders, editOrder, fetchNotifications})(Navbar))

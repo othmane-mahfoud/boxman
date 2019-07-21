@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import jwtDecode from 'jwt-decode'
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
+import { socket } from '../services/socket'
+import { getLocation } from '../services/location'
 import { configureStore } from '../store'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
@@ -11,17 +13,6 @@ import Main from './Main'
 
 const store = configureStore()
 
-const socket = io('http://localhost:8000');
-
-
-socket.on('connect', () => {
-    console.log(socket.connected);
-})
-
-setInterval(async () => {
-    socket.emit("updateLocation", 'working');
-}, 3000);
-
 setInterval(async () => {
   socket.emit("other");
 }, 5000);
@@ -29,9 +20,9 @@ setInterval(async () => {
 if(localStorage.jwtToken) {
     setAuthorizationToken(localStorage.jwtToken)
     try {
-      store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)))
+        store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)))
     } catch(e) {
-      store.dispatch(setCurrentUser({}))
+        store.dispatch(setCurrentUser({}))
     }
 }
 

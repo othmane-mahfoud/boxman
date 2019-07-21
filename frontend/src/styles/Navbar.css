@@ -123,3 +123,22 @@
     cursor: pointer;
     color: black;
 }
+
+.notification {
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 13px;
+    height: 50px;
+}
+
+.notification-btn {
+    color: white;
+    background-color: #419D78;
+}
+
+.notification-btn:hover {
+    color: white;
+    background-color: #419D78;
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+    cursor: pointer;
+}

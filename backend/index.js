@@ -9,6 +9,7 @@ const authRoutes = require('./routes/auth')
 const customersRoutes = require('./routes/customer')
 const boxmenRoutes = require('./routes/boxman')
 const errorHandler = require('./handlers/error')
+const { updateBoxmanLocation } = require('./handlers/boxmen')
 const { loginRequired, ensureCorrectUser } = require("./middlewares/auth");
 
 const server = require('http').createServer();
@@ -50,21 +51,14 @@ app.listen(port, function() {
     console.log(`server listening on port ${port}`)
 })
 
-// io.on('connect', (socket) => {
-//     console.log('we did it')
-//     socket.emit('event', {data: 'inside event'});
-//     socket.on('client', data => {
+//server receiving update every 3
+updateBoxmanLocation(server)
+
+// io.on("connect", socket => {
+//     socket.on("updateLocation", async (data) => {
 //         console.log(data)
+//     });
+//     socket.on("other", () => {
+//         console.log('other')
 //     })
 // });
-
-
-//server receiving update every 3
-io.on("connect", socket => {
-    socket.on("updateLocation", async (data) => {
-        console.log(data)
-    });
-    socket.on("other", () => {
-        console.log('other')
-    })
-});

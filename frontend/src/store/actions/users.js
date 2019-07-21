@@ -26,3 +26,14 @@ export function editProfile(userId, role, userData) {
         });
     };
 }
+
+export function getProfile(userId, role) {
+    return apiCall("get", `/api/${role}/${userId}/profile`)
+    .then(user => {
+        return user
+    })
+    .catch(err => {
+        return err
+    })
+
+}

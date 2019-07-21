@@ -15,7 +15,11 @@ exports.fetchOrders = async function(req, res, next) {
 // GET - /api/boxman/:id/orders/unassigned
 exports.fetchUnassignedOrders = async function(req, res, next) {
     try {
-        let orders = await db.Order.find({status: 'none'}).sort({ createdAt: 'desc' })
+        let orders = await db.Order.find({status: 'none'})
+        .sort({ createdAt: 'desc' })
+        .populate("customer", {
+            name: true
+        });
         return res.status(200).json(orders)
     } catch(err) {
         return(next(err))
@@ -26,6 +30,10 @@ exports.fetchUnassignedOrders = async function(req, res, next) {
 exports.getOrder = async function(req, res, next) {
     try {
         let order = await db.Order.findById(req.params.order_id)
+        .populate("customer", {
+            name: true,
+            phone: true
+        });
         return res.status(200).json(order)
     }
     catch (err) {
@@ -74,6 +82,14 @@ exports.editProfile = async function(req, res, next) {
 
 // Utilities
 
-exports.updateCurrentLocation = async function(req, res, next) {
+exports.updateBoxmanLocation = async function(server) {
     //here we update boxman location every 5s
+    const io = require("socket.io")(server);
+    io.on('connect', socket => {
+        socket.on("updateBoxmanLocation", async ({id, location}) => {
+            let boxman = await db.Boxman.findOneAndUpdate({ _id: id }, { $set: { currentLocation: location } }, {new: true})
+            console.log(boxman.currentLocation)
+        });
+    })
+    
 }

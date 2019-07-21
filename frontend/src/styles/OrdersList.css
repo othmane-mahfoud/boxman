@@ -8,34 +8,3 @@
     outline: none; 
 }
 
-.outline {
-    position: relative;
-    z-index: 3;
-    background: transparent;
-    color: #1172c4;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    border-color: #1172c4;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 22px;
-    padding: 10px 40px;
-    text-transform: uppercase;
-    transition: all 0.2s linear;
-}
-
-.green-white {
-    font-weight: 700;
-    color: #27B08A;
-    border-color: #27B08A;
-    background: transparent;
-    text-decoration: none;
-}
-
-.green-white:hover {
-    color: white;
-    background: #27B08A;
-    border-color: #27B08A;
-    text-decoration: none
-}
-

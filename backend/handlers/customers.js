@@ -6,7 +6,9 @@ const server = require("../index")
 // GET - /api/customer/:id/orders/
 exports.fetchOrders = async function(req, res, next) {
     try {
-        let orders = await db.Order.find({customer: req.params.id}).sort({ createdAt: 'desc' })
+        let orders = await db.Order.find({customer: req.params.id})
+            .sort({ createdAt: 'desc' })
+
         return res.status(200).json(orders)
     } catch(err) {
         return(next(err))
@@ -38,6 +40,11 @@ exports.createOrder = async function(req, res, next) {
 exports.getOrder = async function(req, res, next) {
     try {
         let order = await db.Order.findById(req.params.order_id)
+        .populate("boxman", {
+            name: true,
+            phone: true,
+            currentLocation: true
+        })
         return res.status(200).json(order)
     }
     catch (err) {

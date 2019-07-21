@@ -57,6 +57,7 @@ class OrderForm extends Component {
         .then(() => {
             this.setState({ success: true })
             this.props.history.push('/')
+            this.props.removeError()
         })
         .catch(err => {
             this.props.addError(err.message)

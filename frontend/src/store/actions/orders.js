@@ -52,10 +52,14 @@ export const fetchOrders = (user_id, role) => {
     };
 };
 
+export const fetchNotifications = (user_id, role) => {
+    return apiCall("get", `/api/${role}/${user_id}/orders/unassigned`)
+}
+
 export const addOrder = orderDetails => (dispatch, getState) => {
     let { currentUser } = getState();
     const id = currentUser.user._id;
     return apiCall("post", `/api/customer/${id}/orders`, orderDetails)
       .then(res => {})
       .catch(err => addError(err.message));
-  };
+};

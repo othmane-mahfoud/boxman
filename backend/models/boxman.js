@@ -27,7 +27,8 @@ var boxmanSchema = new mongoose.Schema({
     role: {
         type: String,
         default: "boxman"
-    }
+    },
+    currentLocation: []
 })
 
 boxmanSchema.pre("save", async function(next) {
@@ -53,6 +54,8 @@ boxmanSchema.methods.comparePassword = async function(candidatePassword, next) {
         return next(err);
     }
 };
+
+boxmanSchema.index({ coordinates: "2dsphere" });
 
 var Boxman = mongoose.model('Boxman', boxmanSchema)
 

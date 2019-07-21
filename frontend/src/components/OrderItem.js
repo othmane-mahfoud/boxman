@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import Moment from 'react-moment'
 import { NavLink } from 'react-router-dom'
 import { Card, Icon, Image, List } from 'semantic-ui-react'
 import '../styles/OrderItem.css'
 import DefaultImage from '../images/pasta.jpg'
 import UserImg from '../images/user.png'
+
 // import FoodImage from '../images/pasta.jpg'
 // import GroceriesImage from '../images/groceries.jpg'
 // import HealthImage from '../images/health.png'
@@ -12,6 +14,39 @@ import UserImg from '../images/user.png'
 // import ShoppingImage from '../images/shopping.jpg'
 
 class OrderItem extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            name: '',
+            phone: ''
+        }
+    }
+
+    componentWillMount = () => {
+        if(this.props.currentUser.user.role === 'customer') {
+            if(this.props.boxman) {
+                axios.get(`/api/customer/${this.props.customer}/orders/${this.props.id}`)
+                .then(res => {
+                    console.log(res.data)
+                    this.setState({
+                        name: res.data.boxman.name,
+                        phone: res.data.boxman.phone
+                    })
+                })
+            }
+        }
+        else {
+            axios.get(`/api/boxman/${this.props.currentUser.user._id}/orders/${this.props.id}`)
+            .then(res => {
+                this.setState({
+                    name: res.data.customer.name,
+                    phone: res.data.customer.phone
+                })
+            })
+        }
+    }
+
     pickOrder = () => {
         const {currentUser, id} = this.props
         this.props.editOrder(currentUser.user._id, currentUser.user.role, id, { status: 'picked' })
@@ -35,7 +70,7 @@ class OrderItem extends Component {
     }
 
     render() {
-        const { id, index, date, from, items, to, description, minPrice, maxPrice, estimatedPrice, estimatedDuration, estimatedDistance, status, currentUser } = this.props
+        const { id, index, date, from, items, to, description, minPrice, maxPrice, estimatedPrice, estimatedDuration, estimatedDistance, status, currentUser, customer, boxman } = this.props
         const itemsList = items.map(item => (
             <List.Item key={item._id} className='item'>{item.name}</List.Item>
         ))
@@ -62,18 +97,33 @@ class OrderItem extends Component {
                                 </List>
                             </div>
                             <div className='col-lg-6 col-sm-12'>
-                                <div className='boxman-area row pt-2'>
-                                    <div className='col-2'>
-                                        <img src={UserImg} alt='user' height='40px' width='40px'></img>
-                                    </div>
-                                    <div className='col-8'>
-                                        <span className='pl-2'>Hamid Lmardi</span><br/>
-                                        <small className='text-muted pl-2'>+2126874565</small>
-                                    </div>
-                                    <div className='col-2'>
-                                        <Icon className='mr-4 pt-2' name='phone' />
-                                    </div>
-                                </div>
+                                {this.state.name 
+                                    ?(
+                                        <div className='boxman-area row pt-2'>
+                                            <div className='col-2'>
+                                                <img src={UserImg} alt='user' height='40px' width='40px'></img>
+                                            </div>
+                                            <div className='col-8'>
+                                                <span className='pl-2'>{this.state.name}</span><br/>
+                                                <small className='text-muted pl-2'>{this.state.phone}</small>
+                                            </div>
+                                            <div className='col-2'>
+                                                <Icon className='mr-4 pt-2' name='phone' />
+                                            </div>
+                                        </div>
+                                    )
+                                    :(
+                                        <div className='boxman-area row pt-2'>
+                                            <div className='col-2'>
+                                                <Icon className='mr-4 pt-2' name='clock outline' />
+                                            </div>
+                                            <div className='col-10'>
+                                                <span className='pl-2'>Wait up!</span><br/>
+                                                <small className='text-muted pl-2'>We're finding a boxman</small>
+                                            </div>
+                                        </div>
+                                    )
+                                }
                                 {currentUser.user.role === 'customer' 
                                     ? <p className='centerBtn mt-2'><button className='OrderItem-btn'>Track Order</button></p>
                                     : <div>

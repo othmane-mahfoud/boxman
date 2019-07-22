@@ -53,12 +53,3 @@ app.listen(port, function() {
 
 //server receiving update every 3
 updateBoxmanLocation(server)
-
-// io.on("connect", socket => {
-//     socket.on("updateLocation", async (data) => {
-//         console.log(data)
-//     });
-//     socket.on("other", () => {
-//         console.log('other')
-//     })
-// });

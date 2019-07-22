@@ -124,15 +124,17 @@ class OrderItem extends Component {
                                         </div>
                                     )
                                 }
-                                {currentUser.user.role === 'customer' 
-                                    ? <p className='centerBtn mt-2'><button className='OrderItem-btn'>Track Order</button></p>
-                                    : <div>
+                                {currentUser.user.role === 'customer' && this.state.name !== '' && (
+                                    <NavLink to={`/customer/trackorder/${id}`}><p className='centerBtn mt-2'><button className='OrderItem-btn'>Track Order</button></p></NavLink>
+                                )}
+                                {currentUser.user.role === 'boxman' && this.state.name !== '' && (
+                                    <div>
                                         <p className='centerBtn mt-3'>
                                             {status !== 'picked' && <button className='OrderItem-btn' onClick={this.pickOrder}>Picked</button>}
                                             {status === 'picked' && <button className='OrderItem-btn' onClick={this.deliverOrder}>Delivered</button>}
                                         </p>
-                                      </div>
-                                }
+                                    </div>
+                                )}
                             </div>
                         </div>
 

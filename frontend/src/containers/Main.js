@@ -6,6 +6,7 @@ import Profile from '../components/Profile'
 import Map from '../components/Map'
 import OrderAssistance from '../components/OrderAssistance'
 import OrderForm from './OrderForm'
+import TrackOrder from '../components/TrackOrder'
 import { authUser } from '../store/actions/auth'
 import { removeError } from '../store/actions/errors'
 import { editProfile } from '../store/actions/users'
@@ -26,6 +27,7 @@ const Main = props => {
             {/* <Route exact path='/orders' render={(props) => <OrdersTimeline currentUser={currentUser} {...props}/>}/> */}
             <Route exact path='/users/:id/orders/new' component={withAuth(OrderForm)} />
             <Route exact path='/map' component={Map} />
+            <Route exact path='/customer/trackorder/:order_id' render={(props) => <TrackOrder currentUser={currentUser} {...props}/>}/>
             <Route exact path='/:id/assistance' render={(props) => <OrderAssistance currentUser={currentUser} {...props}/>} />
         </Switch>
     ) 

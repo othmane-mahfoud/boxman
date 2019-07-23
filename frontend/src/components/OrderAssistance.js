@@ -30,12 +30,14 @@ export default class OrderAssistance extends Component {
         try {
             let res = await axios.get(`/api/boxman/${this.props.match.params.id}/orders`)
             let orders = res.data
+            let filteredOrders = orders.filter(order => order.status !== 'delivered')
             let points = []
-            orders.forEach(order => {
-                points.push({
-                    location: order.from,
-                    stopover: true
-                })
+            filteredOrders.forEach(order => {
+                if(order.status !== 'picked')
+                    points.push({
+                        location: order.from,
+                        stopover: true
+                    })
                 points.push({
                     location: order.to,
                     stopover: true

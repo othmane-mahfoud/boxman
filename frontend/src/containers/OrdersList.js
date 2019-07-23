@@ -106,6 +106,18 @@ class OrdersList extends Component {
                         </NavLink>
                     </div>
                 }
+                {currentUser.user.role === 'boxman' && 
+                    <div className='col-lg-3 col-sm-12 mt-0'>
+                        <NavLink to={`/boxman/${currentUser.user._id}/assistance`}>
+                            <div className='btn Profile-request'>
+                                <div className='Profile-request-content pl-2 pt-5'>
+                                    <div><Icon name='map'/></div>
+                                    <div className='Profile-request-text'>Delivery Assistant<Icon name='arrow right'/></div>
+                                </div>
+                            </div>
+                        </NavLink>
+                    </div>
+                }
             </div>
         )
     }

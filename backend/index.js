@@ -51,5 +51,5 @@ app.listen(port, function() {
     console.log(`server listening on port ${port}`)
 })
 
-//server receiving update every 3
+//server receiving update every 3s
 updateBoxmanLocation(server)

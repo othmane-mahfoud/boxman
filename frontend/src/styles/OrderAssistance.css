@@ -1,57 +1,47 @@
-.OrderAssistance-header {
-    text-align: left;
-    font-family: 'DM Sans', sans-serif;
+.OrderAssistance {
+    width: 100%;
+    min-height: 650px;
 }
 
-#map {
-    height: 80vh;
+#OrderAssistance-map {
+    height: 500px !important;
+    float: left;
     width: 100%;
-  }
-  /* Optional: Makes the sample page fill the window. */
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  #right-panel {
-    font-family: 'Roboto','sans-serif';
+}
+
+#OrderAssistance-panel {
+    font-family: 'Ropa Sans',sans-serif;
     line-height: 30px;
     padding-left: 10px;
-  }
-
-  #right-panel select, #right-panel input {
-    font-size: 15px;
-  }
-
-  #right-panel select {
     width: 100%;
-  }
+    margin: 0 auto;
+}
 
-  #right-panel i {
+#OrderAssistance-panel select, #OrderAssistance-panel input {
+    font-size: 15px;
+}
+
+#OrderAssistance-panel select {
+    width: 100%;
+}
+
+#OrderAssistance-panel i {
     font-size: 12px;
-  }
-  #right-panel {
-    height: 100vh;
+}
+#OrderAssistance-panel {
+    height: 100%;
     float: right;
     width: 100%;
     overflow: auto;
-  }
-  #floating-panel {
-    background: #fff;
-    padding: 5px;
-    font-size: 14px;
-    font-family: Arial;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
-    display: none;
-  }
-  @media print {
-    #map {
-      height: 500px;
-      margin: 0;
+}
+
+@media print {
+    #OrderAssistance-map {
+        height: 500px;
+        margin: 0;
     }
     #right-panel {
-      float: none;
-      width: auto;
+        float: none;
+        width: auto;
     }
-  }
+}

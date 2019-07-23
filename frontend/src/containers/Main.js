@@ -24,11 +24,10 @@ const Main = props => {
                 />}
             />
             <Route exact path='/profile' render={(props) => <Profile currentUser={currentUser} {...props}/>}/>
-            {/* <Route exact path='/orders' render={(props) => <OrdersTimeline currentUser={currentUser} {...props}/>}/> */}
             <Route exact path='/users/:id/orders/new' component={withAuth(OrderForm)} />
             <Route exact path='/map' component={Map} />
             <Route exact path='/customer/trackorder/:order_id' render={(props) => <TrackOrder currentUser={currentUser} {...props}/>}/>
-            <Route exact path='/:id/assistance' render={(props) => <OrderAssistance currentUser={currentUser} {...props}/>} />
+            <Route exact path='/boxman/:id/assistance' component={withAuth(OrderAssistance)} />
         </Switch>
     ) 
 }

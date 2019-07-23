@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import OrdersTimeline from './OrdersTimeline'
 import Profile from './Profile'
+import AddressList from './AddressList'
 import FAQ from './FAQ'
 import '../styles/Homepage.css'
 
@@ -81,7 +82,13 @@ export default class Homepage extends Component {
                         </div>
                         <div className="col-9">
                             <div className="tab-content" id="v-pills-tabContent">
-                                {currentUser.user.role === 'customer' && <div className="tab-pane fade show active" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Address</div>}
+                                {currentUser.user.role === 'customer' && 
+                                    <AddressList 
+                                        currentUser={currentUser}
+                                        editProfile={editProfile}
+                                        {...this.props}
+                                    />
+                                }
                             </div>
                         </div>
                     </div>

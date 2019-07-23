@@ -49,7 +49,7 @@ class Navbar extends Component {
                 })
             })
         }
-        if(this.props.currentUser.user.role === 'boxman'){
+        if(this.props.currentUser.user.role === 'boxman' && this.state.active === true){
             interval2 = setInterval(() => {
                 this.props.fetchNotifications(this.props.currentUser.user._id, this.props.currentUser.user.role)
                 .then(() => {
@@ -208,9 +208,14 @@ class Navbar extends Component {
                         <Menu secondary>
                             <NavLink className='brand-link' to='/'><div className='Navbar-brand-logged'>Boxman <i className="Navbar-brand-logo-logged fa fa-shopping-bag" /></div></NavLink>
                             <Menu.Menu position='right' className='pt-2'>
-                                {currentUser.user.role === 'boxman' && 
+                                {currentUser.user.role === 'boxman' && this.state.active === true && 
                                     <Menu.Item>
                                         <span className='active-boxman-label'>Active</span>
+                                    </Menu.Item>
+                                }
+                                {currentUser.user.role === 'boxman' && this.state.active === false && 
+                                    <Menu.Item>
+                                        <span className='active-boxman-label'>Inactive</span>
                                     </Menu.Item>
                                 }
                                 {currentUser.user.role === 'boxman' && 
@@ -221,21 +226,31 @@ class Navbar extends Component {
                                 {this.state.notifications.length === 0
                                     ?
                                     <Menu.Item>
-                                        <Icon className='Navbar-no-notification-logged' name='bell outline' />
+                                        {this.state.active === true && <Icon className='Navbar-no-notification-logged' name='bell outline' />}
+                                        {!this.state.active && (
+                                            <Icon name='bell slash outline'/>
+                                        )} 
                                     </Menu.Item>
                                     :
                                     <Menu.Item>
-                                        <Dropdown
-                                            trigger={
-                                                <Icon className='Navbar-notification-logged' name='bell' />
-                                            } 
-                                            options={options} 
-                                            pointing='top left' 
-                                            icon={null} 
-                                        />
-                                        <Label circular color='green' floating>
-                                            { notifications.length }
-                                        </Label>
+                                        {this.state.active && (
+                                            <Dropdown
+                                                trigger={
+                                                    <Icon className='Navbar-notification-logged' name='bell' />
+                                                } 
+                                                options={options} 
+                                                pointing='top left' 
+                                                icon={null} 
+                                            />
+                                        )}
+                                        {this.state.active && (
+                                            <Label circular color='green' floating>
+                                                { notifications.length }
+                                            </Label>
+                                        )}
+                                        {!this.state.active && (
+                                            <Icon name='bell slash outline'/>
+                                        )}                              
                                     </Menu.Item>
                                 }
                                 

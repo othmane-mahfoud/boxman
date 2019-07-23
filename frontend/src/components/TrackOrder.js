@@ -67,7 +67,6 @@ export default class TrackOrder extends Component {
             lat: this.state.currentLocation[0],
             lng: this.state.currentLocation[1]
         }
-        debugger
         map.setCenter(currentLocation)
     }
 

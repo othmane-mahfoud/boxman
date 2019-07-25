@@ -3,7 +3,7 @@ import axios from 'axios'
 import Moment from 'react-moment'
 import { Icon } from 'semantic-ui-react'
 import Navbar from '../containers/Navbar'
-import Footer from '../components/Footer'
+import Footer from '../views/Footer'
 import '../styles/TrackOrder.css'
 import UserImg from '../images/user.png'
 
@@ -61,7 +61,7 @@ export default class TrackOrder extends Component {
     initMap = () => {
         map = new window.google.maps.Map(document.getElementById('TrackOrder-map'), {
             center: {lat: -34.397, lng: 150.644},
-            zoom: 12
+            zoom: 14
         });
         var currentLocation = {
             lat: this.state.currentLocation[0],
@@ -71,13 +71,23 @@ export default class TrackOrder extends Component {
     }
 
     updateMap = () => {
+        var directionsService = new window.google.maps.DirectionsService();
+        var directionsDisplay = new window.google.maps.DirectionsRenderer();
         var currentLocation = {
             lat: this.state.currentLocation[0],
             lng: this.state.currentLocation[1]
         }
-        var marker = new window.google.maps.Marker({
-            map: map,
-            position: currentLocation
+        directionsDisplay.setMap(map);
+        directionsService.route({
+            origin: currentLocation,
+            destination: this.state.to,
+            travelMode: 'DRIVING'
+        }, (response, status) => {
+            if (status === 'OK') {
+              directionsDisplay.setDirections(response);
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
         });
     }
 
@@ -123,18 +133,18 @@ export default class TrackOrder extends Component {
                                     <p><Icon name='clock outline'></Icon> Ordered at:  <span className='text-muted'><Moment format='HH'>{date}</Moment>h<Moment format='mm'>{date}</Moment>min</span></p>
                                     <p><Icon name='map marker alternate'></Icon> from: {from}</p>
                                     <p><Icon name='map marker alternate'></Icon> to: {to}</p>
-                                    <div >
+                                    <div>
                                         <p className='meet'>Meet your Boxman</p>
                                         <div className='TrackOrder-boxman-area card'>
                                             <div className='card-body'>
-                                                <p className='meet'><img className='boxman-img' src={UserImg} height='30' width='30'/></p>
+                                                <p className='meet'><img className='boxman-img' src={UserImg} alt='user' height='30' width='30'/></p>
                                                 <p className='meet'>{name}</p>
                                                 <p className='meet text-muted'><Icon name='phone'/> {phone}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="card-footer bg-white">
+                                <div className="card-footer bg-white mb-1">
                                     <div className='row'>
                                         <div className='estimationText col-6'>
                                             <div className='estimatedPriceText'>Estimated price</div>

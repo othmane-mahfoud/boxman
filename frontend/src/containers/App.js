@@ -9,7 +9,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { setAuthorizationToken, setCurrentUser } from '../store/actions/auth'
 import '../styles/App.css'
 import Navbar from './Navbar'
-import Main from './Main'
+import Main from '../Routes'
 
 const store = configureStore()
 

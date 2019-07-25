@@ -3,7 +3,7 @@ var router  = express.Router({ mergeParams: true })
 
 var { getProfile, editProfile, createOrder, fetchOrders, getOrder, editOrder } = require('../handlers/customers')
 
-// prefix: /api/customers/:id
+// prefix: /api/customer/:id
 
 router
     .route('/profile')

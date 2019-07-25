@@ -48,3 +48,8 @@
     color: white;
 }
 
+.OrderItem-boxman-area {
+    width: 90%;
+    margin: 0 auto;
+    background-color: #f6f6f6;
+}

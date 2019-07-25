@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Navbar from '../containers/Navbar'
-import Footer from './Footer'
+import Footer from '../views/Footer'
 import '../styles/OrderAssistance.css'
 
 export default class OrderAssistance extends Component {
@@ -99,7 +99,7 @@ export default class OrderAssistance extends Component {
         var directionsService = new window.google.maps.DirectionsService;
         var directionsDisplay = new window.google.maps.DirectionsRenderer;
         var map = new window.google.maps.Map(document.getElementById('OrderAssistance-map'), {
-            zoom: 10,
+            zoom: 12,
             center: {lat: 41.85, lng: -87.65}
         });
         directionsDisplay.setMap(map);

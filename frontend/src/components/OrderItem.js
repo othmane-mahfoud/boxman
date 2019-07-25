@@ -44,6 +44,9 @@ class OrderItem extends Component {
                     phone: res.data.customer.phone
                 })
             })
+            .catch(err => {
+                console.log(err)
+            })
         }
     }
 
@@ -99,18 +102,27 @@ class OrderItem extends Component {
                             <div className='col-lg-6 col-sm-12'>
                                 {this.state.name 
                                     ?(
-                                        <div className='boxman-area row pt-2'>
-                                            <div className='col-2'>
-                                                <img src={UserImg} alt='user' height='40px' width='40px'></img>
-                                            </div>
-                                            <div className='col-8'>
-                                                <span className='pl-2'>{this.state.name}</span><br/>
-                                                <small className='text-muted pl-2'>{this.state.phone}</small>
-                                            </div>
-                                            <div className='col-2'>
-                                                <Icon className='mr-4 pt-2' name='phone' />
+                                        // <div className='boxman-area row pt-2'>
+                                        //     <div className='col-2'>
+                                        //         <img src={UserImg} alt='user' height='40px' width='40px'></img>
+                                        //     </div>
+                                        //     <div className='col-8'>
+                                        //         <span className='pl-2'>{this.state.name}</span><br/>
+                                        //         <small className='text-muted pl-2'>{this.state.phone}</small>
+                                        //     </div>
+                                        //     <div className='col-2'>
+                                        //         <Icon className='mr-4 pt-2' name='phone' />
+                                        //     </div>
+                                        // </div>
+                                        <div>
+                                        <div className='OrderItem-boxman-area card'>
+                                            <div className='card-body'>
+                                                <p className='meet'><img className='boxman-img' src={UserImg} height='30' width='30'/></p>
+                                                <p className='meet'>{this.state.name}</p>
+                                                <p className='meet text-muted'><Icon name='phone'/> {this.state.phone}</p>
                                             </div>
                                         </div>
+                                    </div>
                                     )
                                     :(
                                         <div className='boxman-area row pt-2'>
@@ -130,8 +142,8 @@ class OrderItem extends Component {
                                 {currentUser.user.role === 'boxman' && this.state.name !== '' && (
                                     <div>
                                         <p className='centerBtn mt-3'>
-                                            {status !== 'picked' && <button className='OrderItem-btn' onClick={this.pickOrder}>Picked</button>}
-                                            {status === 'picked' && <button className='OrderItem-btn' onClick={this.deliverOrder}>Delivered</button>}
+                                            {status !== 'picked' && <button className='OrderItem-btn' onClick={this.pickOrder}>Mark as Picked</button>}
+                                            {status === 'picked' && <button className='OrderItem-btn' onClick={this.deliverOrder}>Mark as Delivered</button>}
                                         </p>
                                     </div>
                                 )}

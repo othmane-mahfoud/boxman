@@ -1,5 +1,6 @@
 const db = require("../models");
 const server = require("../index")
+const { ensureOrder } = require('../middlewares/orders')
 
 // ORDERS
 
@@ -39,16 +40,20 @@ exports.createOrder = async function(req, res, next) {
 // GET - /api/customer/:id/orders/:order_id
 exports.getOrder = async function(req, res, next) {
     try {
-        let order = await db.Order.findById(req.params.order_id)
+        const order = await db.Order.findById(req.params.order_id)
         .populate("boxman", {
             name: true,
             phone: true,
             currentLocation: true
         })
-        return res.status(200).json(order)
+        const isCorrectUser = ensureOrder(order.customer, req.params.id)
+        if(isCorrectUser)
+            return res.status(200).json(order)
+        else
+            return next({ status: 401, message: "Unauthorized" })
     }
-    catch (err) {
-        return(next(err))
+    catch(err) {
+        return next(err)
     }
 }
 

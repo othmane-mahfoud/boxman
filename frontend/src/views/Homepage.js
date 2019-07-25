@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import OrdersTimeline from './OrdersTimeline'
-import Profile from './Profile'
-import AddressList from './AddressList'
+import Profile from '../components/Profile'
+import AddressList from '../components/AddressList'
 import FAQ from './FAQ'
 import '../styles/Homepage.css'
 

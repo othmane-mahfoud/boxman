@@ -225,6 +225,11 @@ class OrderForm extends Component {
                                 {isEstimated === false && (<div className='OrderForm-center'>
                                     <button className='OrderForm-submit btn' type='submit'>Place Order</button>
                                 </div>)}
+                                {isEstimated === true && (
+                                    <div className='OrderForm-center mt-3'>
+                                        <button className='OrderForm-submit btn' onClick={this.handleNewOrder}>Confirm Order</button>
+                                    </div>
+                                )}
                             </Form>
                         </div>
                         <div className='col-lg-6 col-sm-12'>
@@ -264,9 +269,6 @@ class OrderForm extends Component {
                                             <div className='estimatedPriceValue alignRight pr-3'>{estimatedPrice} DHS</div>
                                             <div className='estimatedTimeValue alignRight pr-3'>{estimatedDistance}/{estimatedDuration}</div>
                                         </div>
-                                    </div>
-                                    <div className='OrderForm-center mt-3'>
-                                        <button className='OrderForm-submit btn' onClick={this.handleNewOrder}>Confirm Order</button>
                                     </div>
                                 </div>
                             )}

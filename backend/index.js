@@ -10,6 +10,7 @@ const customersRoutes = require('./routes/customer')
 const boxmenRoutes = require('./routes/boxman')
 const errorHandler = require('./handlers/error')
 const { updateBoxmanLocation } = require('./handlers/boxmen')
+const { geocodeLocation, findNearestBoxman, assignOrderToBoxman } = require('./handlers/utils')
 const { loginRequired, ensureCorrectUser } = require("./middlewares/auth");
 
 const server = require('http').createServer();
@@ -51,5 +52,15 @@ app.listen(port, function() {
     console.log(`server listening on port ${port}`)
 })
 
-//server receiving update every 3s
+// server receiving update every 3s
 updateBoxmanLocation(server)
+
+// assignOrderToBoxman({ from: "McDonalds Agdal, Rabat, Morocco" })
+// .then(res => {
+//     console.log(res)
+// })
+// .catch(err => {
+//     console.log(err)
+// })
+
+

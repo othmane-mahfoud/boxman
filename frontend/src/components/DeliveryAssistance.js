@@ -4,25 +4,20 @@ import Navbar from '../containers/Navbar'
 import Footer from '../views/Footer'
 import '../styles/OrderAssistance.css'
 
-export default class OrderAssistance extends Component {
+export default class DeliveryAssistance extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             currentLocation: {},
             destination: '',
-            waypts: [],
-            pickupPoints: [],
-            deliveryPoints: []
+            waypts: []
         }
-        this.getDistance = this.getDistance.bind(this)
     }
 
     componentWillMount = async () => {
         this.getCurrentLocation()
         this.getWaypoints()
-        // this.getDistance("McDonalds Rabat Agdal Morocco", "Marjane Hay Riad Rabat Morocco")
-        this.sortDistances()
     }
 
     componentDidMount = async () => {
@@ -51,7 +46,6 @@ export default class OrderAssistance extends Component {
             this.setState({
                 waypts: points
             }, () => {
-                if(points.length !== 0)
                 this.getFurthestPoint()
             })
         }
@@ -101,19 +95,6 @@ export default class OrderAssistance extends Component {
         });
     }
 
-    getDistance = (origin, destination) => {
-        let service = new window.google.maps.DistanceMatrixService();
-        var dist = 0;
-        service.getDistanceMatrix({
-            origins: [origin],
-            destinations: [destination],
-            travelMode: 'DRIVING',
-        }, (response, status) => {
-            // console.log(response.rows[0].elements[0].distance.value)
-            dist = response.rows[0].elements[0].distance.value
-        });
-    }
-
     initMap() {
         var directionsService = new window.google.maps.DirectionsService;
         var directionsDisplay = new window.google.maps.DirectionsRenderer;
@@ -126,53 +107,12 @@ export default class OrderAssistance extends Component {
         this.calculateAndDisplayRoute(directionsService, directionsDisplay);
     }
 
-    sortDistances = () => {
-        let service = new window.google.maps.DistanceMatrixService();
-        var array = [
-            { location: "Gare Rabat Ville, Rabat Morocco", visited: false, distance: 0 },
-            { location: "McDonalds Agdal, Rabat, Morocco", visited: false, distance: 0 }
-        ]
-        const sortedLocations = [] 
-        var start = "United Remote Avenue Atlas Rabat Morocco"
-        for(var i = 0; i < array.length; i++) {
-            for(var j = 0; j < array.length; j++) {
-                (function(j) {
-                    service.getDistanceMatrix({
-                        origins: [start],
-                        destinations: [array[j].location],
-                        travelMode: 'DRIVING',
-                    }, (response, status) => {
-                        debugger
-                        array[j].distance = response.rows[0].elements[0].distance.value
-                    });
-                })(j)
-            }
-            var min = Number.POSITIVE_INFINITY
-            var minIndex = 0
-            for(var k = 0; k < array.length; k++) {
-                (function(k) {
-                    if(array[k].distance < min && !array[k].visited) {
-                        min = array[k].distance
-                        minIndex = k
-                    }
-                })(j)
-            }
-            sortedLocations.push(array[minIndex].location)
-            start = array[minIndex].location
-            array[minIndex].visited = true
-            console.log(array)
-        }
-        sortedLocations.forEach(location => {
-            console.log(location)
-        });
-    }
-
     calculateAndDisplayRoute(directionsService, directionsDisplay) {
         directionsService.route({
             origin: this.state.currentLocation,
             destination: this.state.destination,
             waypoints: this.state.waypts,
-            // optimizeWaypoints: true,
+            optimizeWaypoints: true,
             travelMode: 'DRIVING'
         }, (response, status) => {
             if (status === 'OK') {

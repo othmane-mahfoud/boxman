@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 var bcrypt   = require('bcrypt')
 
+
 var boxmanSchema = new mongoose.Schema({
     fbId: {
         type: String
@@ -28,7 +29,13 @@ var boxmanSchema = new mongoose.Schema({
         type: String,
         default: "boxman"
     },
-    currentLocation: []
+    currentLocation: [],
+    orders: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Order"
+        }
+    ]
 })
 
 boxmanSchema.pre("save", async function(next) {
@@ -55,7 +62,7 @@ boxmanSchema.methods.comparePassword = async function(candidatePassword, next) {
     }
 };
 
-boxmanSchema.index({ coordinates: "2dsphere" });
+boxmanSchema.index({ currentLocation: "2dsphere" });
 
 var Boxman = mongoose.model('Boxman', boxmanSchema)
 

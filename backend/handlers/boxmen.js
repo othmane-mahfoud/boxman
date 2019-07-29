@@ -5,7 +5,8 @@ const db = require('../models')
 // GET - /api/boxman/:id/orders/
 exports.fetchOrders = async function(req, res, next) {
     try {
-        let orders = await db.Order.find({boxman: req.params.id}).sort({ createdAt: 'desc' })
+        let orders = await db.Order.find({boxman: req.params.id, status: "assigned"})
+        .sort({ createdAt: 'desc' })
         return res.status(200).json(orders)
     } catch(err) {
         return(next(err))
@@ -15,7 +16,7 @@ exports.fetchOrders = async function(req, res, next) {
 // GET - /api/boxman/:id/orders/unassigned
 exports.fetchUnassignedOrders = async function(req, res, next) {
     try {
-        let orders = await db.Order.find({status: 'none'})
+        let orders = await db.Order.find({boxman: req.params.id, status: 'none'})
         .sort({ createdAt: 'desc' })
         .populate("customer", {
             name: true
@@ -51,6 +52,22 @@ exports.editOrder = async function(req, res, next) {
         return next(err);
     }
 }
+
+
+// exports.acceptorder = async function(req, res, next) {
+//     try {
+//         let boxman = await db.Boxman.findOneAndUpdate(
+//             { _id: req.params.id },
+//             { $push: { orders: { _id: req.params.order_id} } },
+//             { new: true }
+//         );
+//         await boxman.save()
+//         res.status(200).json(order)
+//     }
+//     catch(err) {
+//         return next(err)
+//     }
+// }
 
 // PROFILE
 

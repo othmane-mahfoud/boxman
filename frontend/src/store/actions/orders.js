@@ -87,3 +87,11 @@ export const deliverOrder = (user_id, role, order_id) => {
             });
     };
 };
+
+export const getOrder = (user_id, role, order_id) => {
+    return apiCall("get", `/api/${role}/${user_id}/orders/${order_id}`)
+            .then(order => {})
+            .catch(err => {
+                addError(err.message);
+            });
+}

@@ -12,7 +12,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { authUser, logout } from '../store/actions/auth'
 import { editProfile } from '../store/actions/users'
-import { loadOrders, fetchOrders, editOrder, acceptOrder } from '../store/actions/orders'
+import { loadOrders, fetchOrders, editOrder, acceptOrder, getOrder } from '../store/actions/orders'
 import { fetchNotifications } from '../store/actions/notifications'
 import { removeError } from '../store/actions/errors'
 import UserImg from '../images/user.png'
@@ -74,15 +74,6 @@ class Navbar extends Component {
     }
 
     acceptOrder = (user_id, role, order_id) => {
-        // this.props.editOrder(user_id, role, order_id, { boxman: this.props.currentUser.user._id, status: 'assigned' })
-        // .then(res => {
-        //     // this.props.history.push('/')
-        //     // console.log(res)
-        //     this.props.fetchOrders(user_id, role)
-        // })
-        // .catch(err => {
-        //     console.log(err)
-        // })
         this.props.acceptOrder(user_id, role, order_id)
         .then(res => {
             this.props.fetchOrders(user_id, role)
@@ -286,4 +277,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, {authUser, removeError, logout, editProfile, loadOrders, fetchOrders, editOrder, fetchNotifications, acceptOrder})(Navbar))
+export default withRouter(connect(mapStateToProps, {authUser, removeError, logout, editProfile, loadOrders, fetchOrders, editOrder, fetchNotifications, acceptOrder, getOrder})(Navbar))

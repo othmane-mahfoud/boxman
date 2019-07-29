@@ -53,21 +53,64 @@ exports.editOrder = async function(req, res, next) {
     }
 }
 
+// PUT - /api/boxman/:id/orders/:order_id/accept
+exports.acceptOrder = async function(req, res, next) {
+    try {
+        let order = await db.Order.findOneAndUpdate(
+            { _id: req.params.order_id }, 
+            { status: "assigned" }, 
+            { new: true }
+        )
+        await order.save()
+        let boxman = await db.Boxman.findOneAndUpdate(
+            { _id: req.params.id },
+            { $push: { orders: { _id: req.params.order_id} } },
+            { new: true }
+        );
+        await boxman.save()
+        res.status(200).json(order)
+    }
+    catch(err) {
+        return next(err)
+    }
+}
 
-// exports.acceptorder = async function(req, res, next) {
-//     try {
-//         let boxman = await db.Boxman.findOneAndUpdate(
-//             { _id: req.params.id },
-//             { $push: { orders: { _id: req.params.order_id} } },
-//             { new: true }
-//         );
-//         await boxman.save()
-//         res.status(200).json(order)
-//     }
-//     catch(err) {
-//         return next(err)
-//     }
-// }
+// PUT - /api/boxman/:id/orders/:order_id/refuse
+exports.refuseOrder = async function(req, res, next) {
+    try {
+        let order = await db.Order.findOneAndUpdate(
+            { _id: req.params.order_id }, 
+            { status: "refused" }, 
+            { new: true }
+        )
+        await order.save()
+    }
+    catch(err) {
+        return next(err)
+    }
+}
+
+// PUT - /api/boxman/:id/orders/:order_id/deliver
+exports.deliverOrder = async function(req, res, next) {
+    try {
+        let order = await db.Order.findOneAndUpdate(
+            { _id: req.params.order_id }, 
+            { status: "delivered" }, 
+            { new: true }
+        )
+        await order.save()
+        let boxman = await db.Boxman.findOneAndUpdate(
+            { _id: req.params.id },
+            { $pullAll: { orders: [req.params.order_id] } },
+            { new: true }
+        );
+        await boxman.save()
+        res.status(200).json(order)
+    }
+    catch(err) {
+        return next(err)
+    }
+}
 
 // PROFILE
 

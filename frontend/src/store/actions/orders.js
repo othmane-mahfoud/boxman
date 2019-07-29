@@ -63,3 +63,27 @@ export const addOrder = orderDetails => (dispatch, getState) => {
       .then(res => {})
       .catch(err => addError(err.message));
 };
+
+export const acceptOrder = (user_id, role, order_id) => {
+    return dispatch => {
+        return apiCall("put", `/api/${role}/${user_id}/orders/${order_id}/accept`)
+            .then(order => {
+                dispatch(edit(order_id, order))
+            })
+            .catch(err => {
+                addError(err.message);
+            });
+    };
+};
+
+export const deliverOrder = (user_id, role, order_id) => {
+    return dispatch => {
+        return apiCall("put", `/api/${role}/${user_id}/orders/${order_id}/deliver`)
+            .then(order => {
+                dispatch(edit(order_id, order))
+            })
+            .catch(err => {
+                addError(err.message);
+            });
+    };
+};

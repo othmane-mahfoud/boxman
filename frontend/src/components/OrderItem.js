@@ -63,7 +63,14 @@ class OrderItem extends Component {
 
     deliverOrder = () => {
         const {currentUser, id} = this.props
-        this.props.editOrder(currentUser.user._id, currentUser.user.role, id, { status: 'delivered' })
+        // this.props.editOrder(currentUser.user._id, currentUser.user.role, id, { status: 'delivered' })
+        // .then(res => {
+        //     console.log(res)
+        // })
+        // .catch(err => {
+        //     console.log(err)
+        // })
+        this.props.deliverOrder(currentUser.user._id, currentUser.user.role, id)
         .then(res => {
             console.log(res)
         })

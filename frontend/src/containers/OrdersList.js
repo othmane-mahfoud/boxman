@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import '../styles/OrdersList.css'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { fetchOrders, editOrder } from '../store/actions/orders'
+import { fetchOrders, editOrder, deliverOrder } from '../store/actions/orders'
 import { getProfile } from '../store/actions/users'
 import { Header, Icon } from 'semantic-ui-react'
 import OrderItem from '../components/OrderItem'
@@ -13,7 +13,7 @@ class OrdersList extends Component {
     }
 
     render() {
-        const { currentUser, orders, editOrder, getProfile } = this.props
+        const { currentUser, orders, editOrder, getProfile, deliverOrder } = this.props
         if(currentUser.user.role === 'boxman') {
             var filteredOrders = orders.filter(order => (order.status !== 'delivered') && (order.status !== 'none'))
             var ordersList = filteredOrders.map((order, index) => (
@@ -37,6 +37,7 @@ class OrdersList extends Component {
                     boxman={order.boxman}
                     editOrder={editOrder}
                     getProfile={getProfile}
+                    deliverOrder={deliverOrder}
                 />
             ))
             var placeHolderText = (
@@ -130,4 +131,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {fetchOrders, editOrder, getProfile})(OrdersList) 
+export default connect(mapStateToProps, {fetchOrders, editOrder, getProfile, deliverOrder})(OrdersList) 

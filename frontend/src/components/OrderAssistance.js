@@ -21,7 +21,6 @@ export default class OrderAssistance extends Component {
     componentWillMount = async () => {
         this.getCurrentLocation()
         this.getWaypoints()
-        // this.getDistance("McDonalds Rabat Agdal Morocco", "Marjane Hay Riad Rabat Morocco")
         this.sortDistances()
     }
 

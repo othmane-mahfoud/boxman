@@ -32,22 +32,21 @@ exports.createOrder = async function(req, res, next) {
             estimatedPrice: req.body.estimatedPrice,
             estimatedDistance: req.body.estimatedDistance
         })
-        // var boxmanId
-        // await assignOrderToBoxman(order)
-        // .then(async (res) => {
-        //     boxmanId = res
-        // })
-        // .catch(err => {
-        //     console.log(err)
-        // })
-        // let assignedOrder = await db.Order.findOneAndUpdate(
-        //     { _id: order._id },
-        //     { boxman: boxmanId },
-        //     { new: true }
-        // );
-        // await assignedOrder.save()
-        // return res.status(200).json(assignedOrder)
-        return res.status(200).json(order)
+        var boxmanId
+        await assignOrderToBoxman(order)
+        .then(async (res) => {
+            boxmanId = res
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        let assignedOrder = await db.Order.findOneAndUpdate(
+            { _id: order._id },
+            { boxman: boxmanId },
+            { new: true }
+        );
+        await assignedOrder.save()
+        return res.status(200).json(assignedOrder)
     } catch(err) {
         return(next(err))
     }

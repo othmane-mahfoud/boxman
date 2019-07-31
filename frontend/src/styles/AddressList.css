@@ -1,0 +1,14 @@
+.centerAddBtn {
+    width: 100%;
+    text-align: center;
+}
+
+.addressAddBtn {
+    color: white;
+    background-color: #419D78;
+}
+
+.addressAddBtn:hover {
+    color: white;
+    background-color: #419D78;
+}

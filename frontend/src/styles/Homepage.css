@@ -1,0 +1,33 @@
+.HomePage {
+    min-height: 90vh;
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 17px;
+}
+
+.HomePage-content {
+    padding-top: 50px;
+    min-height: 50%;
+}
+
+.nav-link {
+    background-color: transparent;
+    color: black;
+    padding-left: 2rem; 
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    cursor: pointer;
+}
+
+.nav-link-active {
+   background-color: #419D78;
+   color: white;
+   padding-left: 2rem; 
+   padding-top: 1rem;
+   padding-bottom: 1rem;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+.nav-link-active {
+    cursor: pointer;
+}

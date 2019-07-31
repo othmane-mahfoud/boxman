@@ -1,0 +1,73 @@
+.Profile {
+    margin: 0 auto;
+}
+
+.Profile-form {
+    width: 100%;
+    margin: 0 auto;
+    font-size: 17px;
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.Profile-form-label {
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.Profile-form-input {
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.Profile-heading {
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 17px;
+}
+
+.Profile-submit {
+    background-color: #419D78;
+    color: white;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
+    width: 150px;
+}
+
+.Profile-submit:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}
+
+.Profile-right {
+    text-align: right;
+}
+
+.Profile-request {
+    height: 120px;
+    width: 200px;
+    background-color: #419D78;
+    color: white;
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 17px;
+    border-radius: 5px;
+}
+
+.Profile-request:hover {
+    text-decoration: none;
+    outline: none; 
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}
+
+.Profile-request-text {
+    font-size: 16px;
+}
+
+.Profile-request-content {
+    height: 50%;
+    width: 80%;
+    text-align: left;
+}

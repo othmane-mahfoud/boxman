@@ -1,0 +1,10 @@
+.OrdersList-segment {
+    width: 100%;
+    text-align: center;
+}
+
+.OrdersList-submit {
+    cursor: pointer;
+    outline: none; 
+}
+

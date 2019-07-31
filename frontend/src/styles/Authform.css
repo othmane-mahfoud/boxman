@@ -1,0 +1,55 @@
+.Authform {
+    margin: 0 auto;
+    display: table-row;
+}
+
+.Authform-header {
+    text-align: center;
+    font-family: 'Ropa Sans', sans-serif;
+    font-weight: 400;
+}
+
+.Authform-form {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.Authform-submit {
+    background-color: #13916E;
+    color: white;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
+}
+
+.Authform-submit:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}
+
+.Authform-error {
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.Authform-button-center {
+    text-align: center
+}
+
+.Authform-fb-button {
+    background-color: #4e71ba;
+    color: white;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
+}
+
+.Authform-fb-button:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}

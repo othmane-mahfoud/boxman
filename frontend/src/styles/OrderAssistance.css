@@ -1,0 +1,47 @@
+.OrderAssistance {
+    width: 100%;
+    min-height: 650px;
+}
+
+#OrderAssistance-map {
+    height: 500px !important;
+    float: left;
+    width: 100%;
+}
+
+#OrderAssistance-panel {
+    font-family: 'Ropa Sans',sans-serif;
+    line-height: 30px;
+    padding-left: 10px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#OrderAssistance-panel select, #OrderAssistance-panel input {
+    font-size: 15px;
+}
+
+#OrderAssistance-panel select {
+    width: 100%;
+}
+
+#OrderAssistance-panel i {
+    font-size: 12px;
+}
+#OrderAssistance-panel {
+    height: 100%;
+    float: right;
+    width: 100%;
+    overflow: auto;
+}
+
+@media print {
+    #OrderAssistance-map {
+        height: 500px;
+        margin: 0;
+    }
+    #right-panel {
+        float: none;
+        width: auto;
+    }
+}

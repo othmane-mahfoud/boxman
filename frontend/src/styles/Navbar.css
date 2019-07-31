@@ -1,0 +1,144 @@
+/* Logged out */
+
+.Navbar {
+    font-family: 'Ropa Sans', sans-serif;
+    min-height: 80px;
+}
+
+.Navbar-brand {
+    color: white;
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 35px;
+    margin-left: 0px;
+}
+
+.Navbar-register {
+    width: 10rem;
+    background-color: #419D78;
+    color: white;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
+}
+
+.Navbar-register:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}
+
+.Navbar-login {
+    width: 10rem;
+    background-color: white;
+    color: #419D78;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.2);
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
+}
+
+.Navbar-login:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: #419D78;
+}
+
+.Navbar-modal {
+    font-family: 'Ropa Sans', sans-serif;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto!important;
+    top: auto !important;
+    left: auto !important;
+    transform-origin: center !important;
+    transition: all ease .5s;
+    padding-bottom: 1.5rem;
+}
+
+/* Logged in */
+
+.Navbar-logged {
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.Navbar-brand-logged {
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 35px;
+    text-decoration: none;
+}
+
+.Navbar-brand-logo-logged {
+    color: #419D78;
+    font-size: 35px;
+}
+
+.Navbar-notification-logged:hover {
+    color: #419D78;
+    transition: all .2s ease-in-out;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.Navbar-logout-logged:hover {
+    color: #419D78;
+    transition: all .2s ease-in-out;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.Navbar-avatar-logged:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.Navbar-username-logged {
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.Navbar-username-logged:hover {
+    color: #419D78;
+}
+
+.brand-link {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.brand-link:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.brand-link:active {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.brand-link:visited {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.notification {
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 13px;
+    height: 50px;
+}
+
+.notification-btn {
+    color: white;
+    background-color: #419D78;
+}
+
+.notification-btn:hover {
+    color: white;
+    background-color: #419D78;
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+    cursor: pointer;
+}

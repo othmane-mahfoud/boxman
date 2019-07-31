@@ -1,0 +1,102 @@
+.OrderForm {
+    min-height: 620px;
+    padding-top: 3rem;
+}
+
+.OrderForm-Header {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.OrderForm-Header-text {
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.OrderForm-form {
+    width: 80%;
+    margin: 0 auto;
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.OrderForm-input{
+    font-family: 'Open Sans', sans-serif;
+}
+
+.OrderForm-submit {
+    width: 100%;
+    background-color: #419D78;
+    color: white;
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.1);
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
+}
+
+.OrderForm-submit:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}
+
+.Item-Input {
+    border: solid 1px lightgray;
+    border-radius: 3px;
+    padding-left: 1rem;
+}
+
+.Item {
+    box-shadow: 3px 3px 3px rgba(36,36,36, 0.1);
+    background-color: #419D78;
+    color: white;
+    border-radius: 3px;
+}
+
+.Item:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}
+
+.AddItem {
+    background-color: transparent;
+}
+
+.RemoveItem:hover {
+    cursor: pointer;
+}
+
+.AddressLabel {
+    background-color: transparent;
+}
+
+.estimations {
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    width: 98%;
+    margin: 0 auto;
+}
+
+.estimatedPriceText {
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 24px;
+}
+
+.estimatedTimeText {
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 12px;
+}
+
+.estimatedPriceValue {
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 24px;
+    color: #419D78;
+}
+
+.estimatedTimeValue {
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 12px;
+    color: #909090;
+}
+
+.alignRight {
+    text-align: right;
+}

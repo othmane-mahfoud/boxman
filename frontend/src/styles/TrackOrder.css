@@ -1,0 +1,58 @@
+.TrackOrder {
+    min-height: 620px;
+    padding-top: 3rem;
+    font-family: 'Ropa sans', sans-serif
+}
+
+.TrackOrder-header {
+    font-size: 18px;
+    color: #419D78;
+}
+
+#TrackOrder-map {
+    width: 100%;
+    height: 400px !important;
+}
+
+.TrackOrder-progress {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.TrackOrder-progress-bar {
+    width: 25%;
+    background-color: #419D78;
+}
+
+.TrackOrder-progress-bar-step1 {
+    width: 33%;
+    background-color: #419D78;
+}
+
+.TrackOrder-progress-bar-step2 {
+    width: 66%;
+    background-color: #419D78;
+}
+
+.TrackOrder-progress-bar-step3 {
+    width: 100%;
+    background-color: #419D78;
+}
+
+.TrackOrder-status {
+    text-align: center;
+}
+
+.TrackOrder-boxman-area {
+    width: 40%;
+    margin: 0 auto;
+    background-color: #F1F1F1;
+}
+
+.meet {
+    text-align: center;
+}
+
+.boxman-img {
+    margin: 0 auto;
+}

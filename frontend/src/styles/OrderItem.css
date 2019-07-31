@@ -1,0 +1,55 @@
+.OrderItem {
+    width: 95%;
+}
+
+.boxman-area {
+    max-width: 90%;
+    margin: 0 auto;
+    background-color: #F1F1F1;
+    font-size: 16px;
+    border-radius: 3px;
+}
+
+.boxman-name {
+    margin: 0 auto;
+}
+
+.item {
+    font-size: 16px;
+}
+
+.card-header {
+    color: #419D78;
+}
+
+.mapContainer {
+    width: 80%;
+    margin: 0 auto;
+    height: 200px;
+}
+
+.OrderItem-btn {
+    width: 90%;
+    background-color: #419D78;
+    color: white;
+    border-radius: 3px;
+    font-family: 'Ropa Sans', sans-serif;
+    height: 40px;
+    margin: 0 auto;
+}
+
+.centerBtn {
+    text-align: center;
+}
+
+.OrderItem-btn:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.02);
+    color: white;
+}
+
+.OrderItem-boxman-area {
+    width: 90%;
+    margin: 0 auto;
+    background-color: #f6f6f6;
+}

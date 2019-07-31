@@ -1,7 +1,7 @@
 var express = require('express')
 var router  = express.Router({ mergeParams: true })
 
-var { getProfile, editProfile, editOrder, fetchOrders, fetchUnassignedOrders, getOrder, acceptOrder, refuseOrder, deliverOrder } = require('../handlers/boxmen')
+var { getProfile, editProfile, editOrder, fetchOrders, fetchUnassignedOrders, getOrder, acceptOrder, refuseOrder, deliverOrder, getWaypoints, getSortedWayPoints} = require('../handlers/boxmen')
 
 // prefix: /api/boxman/:id
 
@@ -17,6 +17,14 @@ router
 router
     .route('/orders/unassigned')
     .get(fetchUnassignedOrders)
+
+router
+    .route('/orders/waypoints')
+    .get(getWaypoints)
+
+router
+    .route('/orders/sortedwaypoints')
+    .get(getSortedWayPoints)
 
 router
     .route('/orders/:order_id')

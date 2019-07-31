@@ -4,24 +4,21 @@ import Navbar from '../containers/Navbar'
 import Footer from '../views/Footer'
 import '../styles/OrderAssistance.css'
 
-export default class OrderAssistance extends Component {
+export default class DeliveryAssistance extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             currentLocation: {},
             destination: '',
-            waypts: [],
-            pickupPoints: [],
-            deliveryPoints: []
+            waypts: []
         }
-        this.getDistance = this.getDistance.bind(this)
     }
 
     componentWillMount = async () => {
         this.getCurrentLocation()
-        this.getWaypoints()
-        this.sortDistances()
+        // this.getWaypoints()
+        this.getSortedWayPoints()
     }
 
     componentDidMount = async () => {
@@ -31,33 +28,37 @@ export default class OrderAssistance extends Component {
     }
 
     getWaypoints = async () => {
-        try {
-            let res = await axios.get(`/api/boxman/${this.props.match.params.id}/orders`)
-            let orders = res.data
-            let filteredOrders = orders.filter(order => order.status !== 'delivered')
-            let points = []
-            filteredOrders.forEach(order => {
-                if(order.status !== 'picked')
-                    points.push({
-                        location: order.from,
-                        stopover: true
-                    })
-                points.push({
-                    location: order.to,
-                    stopover: true
+            axios.get(`/api/boxman/${this.props.match.params.id}/orders/waypoints`)
+            .then(res => {
+                debugger
+                this.setState({
+                    waypts: res.data
+                }, () => {
+                    this.getFurthestPoint()
                 })
-            });
-            this.setState({
-                waypts: points
-            }, () => {
-                if(points.length !== 0)
-                this.getFurthestPoint()
             })
-        }
-        catch(err) {
-            console.log(err)
-        }
+            .catch(err => {
+                console.log(err)
+            })
     }
+
+    getSortedWayPoints = async () => {
+        axios.get(`/api/boxman/${this.props.match.params.id}/orders/sortedwaypoints`)
+        .then(res => {
+            debugger
+            let lastDestinationIndex = res.data.length - 1
+            let lastDestination = res.data[lastDestinationIndex].location
+            let updatedWaypts = [...res.data]
+            updatedWaypts.pop()
+            this.setState({
+                destination: lastDestination,
+                waypts: updatedWaypts
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
 
     getCurrentLocation = async () => {
         try {
@@ -94,22 +95,10 @@ export default class OrderAssistance extends Component {
                     index = i
                 }
             }
+            debugger
             this.setState({
                 destination: dest[index]
             })
-        });
-    }
-
-    getDistance = (origin, destination) => {
-        let service = new window.google.maps.DistanceMatrixService();
-        var dist = 0;
-        service.getDistanceMatrix({
-            origins: [origin],
-            destinations: [destination],
-            travelMode: 'DRIVING',
-        }, (response, status) => {
-            // console.log(response.rows[0].elements[0].distance.value)
-            dist = response.rows[0].elements[0].distance.value
         });
     }
 
@@ -125,53 +114,13 @@ export default class OrderAssistance extends Component {
         this.calculateAndDisplayRoute(directionsService, directionsDisplay);
     }
 
-    sortDistances = () => {
-        let service = new window.google.maps.DistanceMatrixService();
-        var array = [
-            { location: "Gare Rabat Ville, Rabat Morocco", visited: false, distance: 0 },
-            { location: "McDonalds Agdal, Rabat, Morocco", visited: false, distance: 0 }
-        ]
-        const sortedLocations = [] 
-        var start = "United Remote Avenue Atlas Rabat Morocco"
-        for(var i = 0; i < array.length; i++) {
-            for(var j = 0; j < array.length; j++) {
-                (function(j) {
-                    service.getDistanceMatrix({
-                        origins: [start],
-                        destinations: [array[j].location],
-                        travelMode: 'DRIVING',
-                    }, (response, status) => {
-                        debugger
-                        array[j].distance = response.rows[0].elements[0].distance.value
-                    });
-                })(j)
-            }
-            var min = Number.POSITIVE_INFINITY
-            var minIndex = 0
-            for(var k = 0; k < array.length; k++) {
-                (function(k) {
-                    if(array[k].distance < min && !array[k].visited) {
-                        min = array[k].distance
-                        minIndex = k
-                    }
-                })(j)
-            }
-            sortedLocations.push(array[minIndex].location)
-            start = array[minIndex].location
-            array[minIndex].visited = true
-            console.log(array)
-        }
-        sortedLocations.forEach(location => {
-            console.log(location)
-        });
-    }
-
     calculateAndDisplayRoute(directionsService, directionsDisplay) {
+
         directionsService.route({
             origin: this.state.currentLocation,
             destination: this.state.destination,
             waypoints: this.state.waypts,
-            // optimizeWaypoints: true,
+            optimizeWaypoints: false,
             travelMode: 'DRIVING'
         }, (response, status) => {
             if (status === 'OK') {

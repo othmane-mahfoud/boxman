@@ -95,3 +95,11 @@ export const getOrder = (user_id, role, order_id) => {
                 addError(err.message);
             });
 }
+
+export const getWaypoints = (user_id, role) => {
+    return apiCall("get", `/api/${role}/${user_id}/orders/waypoints`)
+            .then(waypoints => {})
+            .catch(err => {
+                addError(err.message);
+            });
+}

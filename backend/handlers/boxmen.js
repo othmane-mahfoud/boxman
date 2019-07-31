@@ -1,11 +1,17 @@
 const db = require('../models')
+const { dijkstraWithValues } = require('./utils')
 
 // ORDERS
 
 // GET - /api/boxman/:id/orders/
 exports.fetchOrders = async function(req, res, next) {
     try {
-        let orders = await db.Order.find({boxman: req.params.id, status: "assigned"})
+        let orders = await db.Order.find({ 
+            $or: [ 
+                { boxman: req.params.id, status: 'assigned' },
+                { boxman: req.params.id, status: 'picked' }
+            ]
+        })
         .sort({ createdAt: 'desc' })
         return res.status(200).json(orders)
     } catch(err) {
@@ -22,6 +28,63 @@ exports.fetchUnassignedOrders = async function(req, res, next) {
             name: true
         });
         return res.status(200).json(orders)
+    } catch(err) {
+        return(next(err))
+    }
+}
+
+// GET - /api/boxman/:id/orders/waypoints
+exports.getWaypoints = async function(req, res, next) {
+    try {
+        let orders = await db.Order.find({ 
+            $or: [ 
+                { boxman: req.params.id, status: 'assigned' },
+                { boxman: req.params.id, status: 'picked' }
+            ]
+        })
+        .sort({ createdAt: 'desc' })
+        let pickup = await orders.map(order => {
+            if(order.status !== 'picked')
+                return {
+                    location: order.from,
+                    stopover: true
+                }
+        })
+        let destination = await orders.map(order => (
+            {
+                location: order.to,
+                stopover: true 
+            }
+        ))
+        let waypoints = await pickup.concat(destination)
+        return res.status(200).json(waypoints)
+    } catch(err) {
+        return(next(err))
+    }
+}
+
+
+// GET - /api/boxman/:id/orders/sortedwaypoints
+exports.getSortedWayPoints = async function(req, res, next) {
+    try {
+        let orders = await db.Order.find({ 
+            $or: [ 
+                { boxman: req.params.id, status: 'assigned' },
+                { boxman: req.params.id, status: 'picked' }
+            ]
+        })
+        .sort({ createdAt: 'desc' })
+        let pickup = await orders.map(order => order.from)
+        let pickupWayPoints = await dijkstraWithValues("United Remote, Avenue Atlas, Rabat, Morocco", pickup)
+        let destination = await orders.map(order => order.to)
+        let lastPickup = pickupWayPoints.length - 1
+        let destinationWayPoints = await dijkstraWithValues(pickupWayPoints[lastPickup], destination)
+        let wayPoints = await pickupWayPoints.concat(destinationWayPoints)
+        let sortedWayPoints = await wayPoints.map(p => ({
+            location: p,
+            stopover: true
+        }))
+        return res.status(200).json(sortedWayPoints)
     } catch(err) {
         return(next(err))
     }
